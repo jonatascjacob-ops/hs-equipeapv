@@ -56,12 +56,6 @@
         </div>
     </div>
 
-    <!-- Botão Flutuante de Menu Lateral (FAB) - Visível apenas quando o leitor está aberto -->
-    <button id="floating-menu-btn" onclick="toggleDrawer(true)" class="fixed bottom-6 right-6 bg-[#C86240] hover:bg-[#B35233] text-white p-4 rounded-full shadow-2xl z-30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 font-bold text-sm md:text-base hidden border border-[#FAF8F5]/20">
-        <span>☰</span>
-        <span>Escolher Dia</span>
-    </button>
-
     <header class="bg-[#1E2D3D] text-[#FAF8F5] p-6 shadow-md text-center border-b border-[#C86240]/20">
         <h1 class="text-3xl font-bold tracking-tight">Hora Silenciosa APV</h1>
         <p class="text-[#FAF8F5]/80 mt-2 text-sm uppercase tracking-widest font-medium">Temporada de Inverno 2026 — Identidade</p>
@@ -127,14 +121,29 @@
         <!-- LEITOR INDUTIVO (Oculto até um dia ser selecionado) -->
         <section id="reader-section" class="hidden bg-white rounded-xl shadow-lg border-t-4 border-[#C86240] p-6 md:p-8 mt-8 scroll-mt-6">
             
-            <!-- Botão Superior de Retorno Rápido ao Menu -->
-            <div class="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
-                <button onclick="closeReader()" class="inline-flex items-center gap-2 text-sm font-bold text-[#C86240] hover:text-[#1E2D3D] transition-colors group">
-                    <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Voltar para o Painel
-                </button>
-                <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#C86240] hover:text-orange-900 transition-colors">
-                    <span>☰</span> Escolher Outro Dia
-                </button>
+            <!-- BARRA DE AÇÕES RÁPIDAS SUPERIOR (Menu Simples com Botões Arredondados) -->
+            <div class="mb-6 pb-4 border-b border-[#E5DCD3] flex flex-wrap items-center justify-between gap-4">
+                <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Modo Leitura Ativo</span>
+                
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Botão 1: Voltar para o Painel (Home) -->
+                    <button onclick="closeReader()" class="inline-flex items-center gap-2 bg-[#1E2D3D] hover:bg-[#2D4255] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                        <span>🏠</span>
+                        <span>Painel</span>
+                    </button>
+                    
+                    <!-- Botão 2: Ir para a Hora Silenciosa do Dia (Hoje) -->
+                    <button onclick="openTodayDevotional()" class="inline-flex items-center gap-2 bg-[#DCA134] hover:bg-[#C99026] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                        <span>⚡</span>
+                        <span>Hoje</span>
+                    </button>
+                    
+                    <!-- Botão 3: Escolher Outro Dia (Menu Drawer) -->
+                    <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-[#E5DCD3] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                        <span>📅</span>
+                        <span>Outro Dia</span>
+                    </button>
+                </div>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
@@ -181,12 +190,12 @@
                 </div>
 
                 <div class="bg-[#FAF8F5] p-6 rounded-lg border border-[#E5DCD3] shadow-inner">
-                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicacao Prática</h4>
+                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicação Prática</h4>
                     <p id="read-app" class="text-[#1E2D3D] font-medium leading-relaxed"></p>
                 </div>
             </div>
             
-            <!-- NAVEGAÇÃO ENTRE DIAS -->
+            <!-- NAVEGAÇÃO ENTRE DIAS (RODAPÉ) -->
             <div class="border-t border-slate-200 pt-6 flex justify-between items-center gap-2">
                 <button id="nav-prev-btn" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
                     <span>←</span> <span class="hidden sm:inline">Anterior</span>
@@ -437,7 +446,7 @@
                 stage: "Perseverança até o fim", focus: "Último dia com acampantes. Despedida dos Teens 2 e noite de decisões.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
                 meb: {
-                    obs: "Qual é o 'novo mandamento' que Jesus deixa para Seus seguidores? Qual é a régua/padrão que Ele estabelece para esse amor? O que esse amor mútuo revelará publicamente ao mundo?",
+                    obs: "Qual é o 'novo mandamento' que Jesus deixa para Seus seguidores? Qual é a regra/padrão que Ele estabelece para esse amor? O que esse amor mútuo revelará publicamente ao mundo?",
                     int: "Por que o amor mútuo dentro de uma equipe ministerial é a ferramenta apologética e evangelística mais poderosa diante dos adolescentes do acampamento, muito mais do que qualquer palestra ou estrutura de som?",
                     app: "No esgotamento de final de temporada, o amor é uma decisão de não fazer o mínimo. Exige sacrificar o seu conforto para interagir pacientemente com adolescentes críticos e equipantes exaustos, além das panelinhas habituais. Como você demonstrará esse amor sacrificial prático hoje no último apelo?"
                 }
@@ -449,7 +458,7 @@
                 period: "Despedida da Equipe", periodDates: "23/07", periodIcon: "🌅", periodColor: "bg-[#F7EFE2]",
                 meb: {
                     obs: "O que o autor de Hebreus afirma que Deus não é, garantindo que Ele jamais esquecerá o nosso trabalho? Quais são as duas evidências de amor que o povo de Deus demonstrou ao Seu nome?",
-                    int: "No contexto do acampamento, muitas lágrimas foram choradas em secreto, orações foram feitas de joelhos no chão frio e tarefas exaustivas foram cumpridas sem que nenhum líder humano visse. Como a justiça perfeita de Deus conforta o nosso coração de que nada foi desperdiçado ou em vão?",
+                    int: "No contexto do acampamento, muitas lágrimas foram choradas em secreto, orações foram feitas de joelhos no chão frio e tarefas exaustivas foram cumpridas sem que nenhum líder humano visse. Como a justiça perfeita de Deus conforta o nosso coração de que nada foi desperdiçado ou em vai?",
                     app: "A temporada acabou, as malas estão prontas e o cansaço é real. Ao olhar para trás hoje, você tem a convicção de ter servido ao Senhor com integridade? Como saber que Deus se lembra de cada pequeno ato de amor te motiva a continuar servindo com fidelidade na sua igreja local, na faculdade ou na sua rotina diária a partir de amanhã?"
                 }
             }
@@ -642,6 +651,22 @@
             }
         }
 
+        function openTodayDevotional() {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const todayStr = `${dd}/${mm}`;
+            
+            let todayDevo = devotionals.find(d => d.date === todayStr);
+            if (!todayDevo) {
+                // Fallback de contingência caso os testes ocorram fora do período oficial da temporada (03/07)
+                todayDevo = devotionals.find(d => d.date === "03/07");
+            }
+            if (todayDevo) {
+                openDevotional(todayDevo.day, true);
+            }
+        }
+
         function toggleDrawer(isOpen) {
             const drawer = document.getElementById('sidebar-drawer');
             const backdrop = document.getElementById('sidebar-backdrop');
@@ -670,8 +695,9 @@
             // Oculta o botão de navegação rápida flutuante
             document.getElementById('floating-menu-btn').classList.add('hidden');
             
-            // Desativa o estado de leitor aberto para limpar a sessão em recarregamentos futuros
+            // Desativa o estado de leitor aberto e limpa a sessão para não travar no reload
             localStorage.setItem('apv_reader_open', 'false');
+            localStorage.removeItem('apv_last_day');
 
             // Limpa as marcas de seleção de leitura para manter o menu estético e limpo
             devotionals.forEach(d => {
@@ -685,7 +711,7 @@
             highlightToday();
             
             // Centra o foco na secção do calendário completo de dias
-            window.scrollTo({top: document.getElementById('calendar-section').offsetTop - 20, behavior: 'smooth'});
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function openDevotional(dayNumber, shouldScroll = true) {
@@ -719,9 +745,6 @@
             // Oculta as seções de menu para dar foco total à leitura (usabilidade mobile)
             document.getElementById('calendar-section').classList.add('hidden');
             document.getElementById('dynamics-section').classList.add('hidden');
-
-            // Torna o botão flutuante de menu de dias visível
-            document.getElementById('floating-menu-btn').classList.remove('hidden');
 
             // Carrega dados no leitor
             document.getElementById('read-period').textContent = devo.period;
