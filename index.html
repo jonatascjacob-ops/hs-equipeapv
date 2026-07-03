@@ -428,7 +428,7 @@
                 meb: {
                     obs: "Qual é o dever explícito dos que são fortes em relação às fraquezas dos fracos? O que os fortes devem evitar fazer em relação a si mesmos?",
                     int: "'Suportar' aqui significa carregar ativamente o fardo de alguém, ajudando-o a caminhar. Como o sacrifício de Jesus Cristo — que carregou sobre si as nossas dores e enfermidades espirituais — nos dá a base teológica para tolerar e ajudar os irmãos de equipe cansados ou irritados?",
-                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). Mas o suporte mútuo no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
+                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). Mas o suporte mútua no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
                 }
             },
             {
@@ -464,9 +464,14 @@
             
             // Tenta restaurar o progresso salvo no localStorage
             const savedDay = localStorage.getItem('apv_last_day');
-            if (savedDay) {
+            const readerWasOpen = localStorage.getItem('apv_reader_open') === 'true';
+            
+            if (savedDay && readerWasOpen) {
                 openDevotional(parseInt(savedDay), false);
+            } else {
+                closeReader(); // isso garante o estado de menu inicial limpo
             }
+            highlightToday();
         }
 
         function renderChart() {
@@ -595,6 +600,31 @@
             });
         }
 
+        function highlightToday() {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const todayStr = `${dd}/${mm}`; // "03/07"
+            
+            const todayDevo = devotionals.find(d => d.date === todayStr);
+            if (todayDevo) {
+                const btn = document.getElementById(`devo-btn-${todayDevo.day}`);
+                if (btn) {
+                    // Adiciona destaque com borda dourada/terracota
+                    btn.classList.add('ring-2', 'ring-[#C86240]', 'ring-offset-2', 'bg-amber-50/50');
+                    
+                    // Adiciona o badge "HOJE" dinamicamente
+                    const titleSpan = btn.querySelector('.font-semibold');
+                    if (titleSpan && !btn.querySelector('.today-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'today-badge inline-block ml-2 bg-[#C86240] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse';
+                        badge.textContent = 'Hoje';
+                        titleSpan.after(badge);
+                    }
+                }
+            }
+        }
+
         function toggleDrawer(isOpen) {
             const drawer = document.getElementById('sidebar-drawer');
             const backdrop = document.getElementById('sidebar-backdrop');
@@ -623,6 +653,20 @@
             // Oculta o botão flutuante de menu lateral pois o menu principal já está na tela
             document.getElementById('floating-menu-btn').classList.add('hidden');
             
+            // Salva que o leitor foi fechado para não travar na última sessão no próximo reload
+            localStorage.setItem('apv_reader_open', 'false');
+
+            // Limpa as classes de seleção de leitura para o menu ficar limpo
+            devotionals.forEach(d => {
+                const button = document.getElementById(`devo-btn-${d.day}`);
+                if (button) {
+                    button.classList.remove('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
+                }
+            });
+
+            // Re-aplica o destaque do dia de hoje (03/07)
+            highlightToday();
+            
             // Centraliza o scroll de volta nas opções de dias de forma suave
             window.scrollTo({top: document.getElementById('calendar-section').offsetTop - 20, behavior: 'smooth'});
         }
@@ -633,6 +677,7 @@
 
             currentActiveDay = dayNumber;
             localStorage.setItem('apv_last_day', dayNumber);
+            localStorage.setItem('apv_reader_open', 'true');
 
             // Destaca o dia ativo na listagem de cards e no menu lateral
             devotionals.forEach(d => {
