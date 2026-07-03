@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia de Hora Silenciosa - APV Inverno 2026</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link class="favicon-icon" rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Chosen Palette: Identidade Orgânica (Fundo creme/areia #FAF8F5, azul-marinho profundo para estrutura #1E2D3D, terracota/argila #C86240 para calor espiritual e detalhes, ouro/mostarda #DCA134 para identidade e realeza). -->
@@ -99,7 +99,7 @@
                         <span class="text-2xl">🙏</span>
                         <div>
                             <h3 class="font-bold text-[#1E2D3D]">3. Oração e Memorização (10 min)</h3>
-                            <p class="text-sm text-slate-600">Gaste tempo em diálogo íntimo com Deus. Memorize a frase-chave do dia e guarde-a no coração.</p>
+                            <p class="text-sm text-slate-600">Gaste tempo em diálogo íntimo com Deus. Memorize a frase-chave del dia e guarde-a no coração.</p>
                         </div>
                     </div>
                 </div>
@@ -127,19 +127,19 @@
                 
                 <div class="flex flex-wrap items-center gap-2">
                     <!-- Botão 1: Voltar para o Painel (Home) -->
-                    <button onclick="closeReader()" class="inline-flex items-center gap-2 bg-[#1E2D3D] hover:bg-[#2D4255] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                    <button onclick="closeReader()" class="inline-flex items-center gap-2 bg-[#1E2D3D] hover:bg-[#2D4255] text-[#FAF8F5] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>🏠</span>
                         <span>Painel</span>
                     </button>
                     
                     <!-- Botão 2: Ir para a Hora Silenciosa do Dia (Hoje) -->
-                    <button onclick="openTodayDevotional()" class="inline-flex items-center gap-2 bg-[#DCA134] hover:bg-[#C99026] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                    <button onclick="openTodayDevotional()" class="inline-flex items-center gap-2 bg-[#DCA134] hover:bg-[#C99026] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>⚡</span>
                         <span>Hoje</span>
                     </button>
                     
                     <!-- Botão 3: Escolher Outro Dia (Menu Drawer) -->
-                    <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-[#E5DCD3] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all">
+                    <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-[#E5DCD3] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>📅</span>
                         <span>Outro Dia</span>
                     </button>
@@ -404,7 +404,7 @@
                 meb: {
                     obs: "Qual é a exortação prática sobre 'fazer o bem'? Qual é a condição temporal e espiritual estabelecida para colhermos os frutos?",
                     int: "A expressão 'não desfalecer' significa não perder o ânimo ou relaxar o espaço. Por que tendemos a desanimar quando não vemos frutos espirituais imediatos nos adolescentes? Como a perseverança de Cristo, que foi fiel até a morte, nos sustenta a continuar semeando hoje?",
-                    app: "Nesta última semana, com o cansaço acumulado no limite, a tentação de se acomodar e fazer apenas o mínimo necessário para 'dar conta da escala' é imensa. Como você combaterá essa inércia carnal hoje para manter um padrão de excelência e dedicação no seu setor até o último segundo de acampamento?"
+                    app: "Nesta última semana, com o cansaço acumulado nel limite, a tentação de se acomodar e fazer apenas o mínimo necessário para 'dar conta da escala' é imensa. Como você combaterá essa inércia carnal hoje para manter um padrão de excelência e dedicação no seu setor até o último segundo de acampamento?"
                 }
             },
             {
@@ -426,7 +426,7 @@
                 meb: {
                     obs: "De qual maneira a nossa luz deve brilhar diante das pessoas? Qual deve ser a reação natural delas ao contemplarem as nossas boas obras?",
                     int: "Brilhar a nossa luz não significa exibir uma espiritualidade orgulhosa para sermos elogiados, mas sim refletir o caráter de Cristo. De que forma o orgulho de querermos ser considerados os 'melhores conselheiros' ou os mais 'legais' rouba a glória que pertence unicamente a Deus?",
-                    app: "Não caia na armadilha de mostrar um ar de superioridade por estar atuando em um setor 'mais visível' e pop, ou uma falsa modéstia para ser elogiado por servir em um setor 'invisível'. Como você pode submeter o seu desejo de ser notado hoje para que as pessoas glorifiquem apenas ao Pai que está nos céus?"
+                    app: "Quando os acampantes começam a se apegar a você ou elogiar sua dedicação, como você direciona esse carinho? Ore hoje pedindo que cada sorriso, abraço e palavra sua sirva como uma seta apontando os adolescentes para a beleza do Pai celestial, e não para você."
                 }
             },
             {
@@ -471,18 +471,24 @@
             renderCalendar();
             renderDrawer();
             
-            // Tenta restaurar o progresso guardado no localStorage
+            // Ouvinte para mudanças de rotas (URL Hash)
+            window.addEventListener('hashchange', handleRouting);
+            
+            // Processa o estado de roteamento inicial
             const savedDay = localStorage.getItem('apv_last_day');
             const readerWasOpen = localStorage.getItem('apv_reader_open') === 'true';
             
-            if (savedDay && readerWasOpen) {
-                openDevotional(parseInt(savedDay), false);
+            if (window.location.hash.startsWith('#dia-')) {
+                handleRouting();
+            } else if (savedDay && readerWasOpen) {
+                // Sincroniza o hash da URL com a última leitura guardada
+                window.location.hash = `#dia-${savedDay}`;
             } else {
-                closeReader(); // Garante o estado limpo do menu inicial
+                closeReader();
             }
             highlightToday();
 
-            // Ativa o suporte de Service Worker para funcionalidade Offline se disponível
+            // Ativa o suporte de Service Worker para funcionalidade Offline
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('./sw.js')
@@ -595,7 +601,7 @@
                 let buttonsHTML = '';
                 periodDevos.forEach(devo => {
                     buttonsHTML += `
-                        <button id="drawer-btn-${devo.day}" onclick="openDevotional(${devo.day}, true); toggleDrawer(false);" class="w-full text-left px-3 py-2 border-t border-slate-100 hover:bg-slate-100 flex justify-between items-center group transition-colors">
+                        <button id="drawer-btn-${devo.day}" onclick="openDevotional(${devo.day}, true); toggleDrawer(false);" class="w-full text-left px-3 py-2 border-t border-slate-100 hover:bg-[#FAF8F5]/85 flex justify-between items-center group transition-colors">
                             <div class="text-sm">
                                 <span class="text-[10px] font-bold text-slate-400 block">DIA ${devo.day} • ${devo.date}</span>
                                 <span class="font-semibold text-[#1E2D3D] group-hover:text-[#C86240]">${devo.icon} ${devo.title}</span>
@@ -619,7 +625,6 @@
         }
 
         function highlightToday() {
-            // Deteta a data atual do telemóvel/dispositivo
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -627,12 +632,11 @@
             
             const todayDevo = devotionals.find(d => d.date === todayStr);
             if (todayDevo) {
+                // Destaque no Painel Inicial
                 const btn = document.getElementById(`devo-btn-${todayDevo.day}`);
                 if (btn) {
-                    // Adiciona destaque estético com borda terracota pulsante
                     btn.classList.add('ring-2', 'ring-[#C86240]', 'ring-offset-2', 'bg-amber-50/50');
                     
-                    // Adiciona o selo de "Hoje" dinamicamente se não existir
                     const titleSpan = btn.querySelector('.font-semibold');
                     if (titleSpan && !btn.querySelector('.today-badge')) {
                         const badge = document.createElement('span');
@@ -641,11 +645,24 @@
                         titleSpan.after(badge);
                     }
 
-                    // Se a Hora Silenciosa não estiver aberta, centra o ecrã no dia de hoje automaticamente
-                    if (localStorage.getItem('apv_reader_open') !== 'true') {
+                    if (localStorage.getItem('apv_reader_open') !== 'true' && !window.location.hash.startsWith('#dia-')) {
                         setTimeout(() => {
                             btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }, 400);
+                    }
+                }
+
+                // Novo recurso: Destaque também na Barra/Guia Lateral
+                const drawerBtn = document.getElementById(`drawer-btn-${todayDevo.day}`);
+                if (drawerBtn) {
+                    drawerBtn.classList.add('bg-amber-50/50', 'border-l-4', 'border-l-[#C86240]');
+                    
+                    const drawerTitleSpan = drawerBtn.querySelector('.font-semibold');
+                    if (drawerTitleSpan && !drawerBtn.querySelector('.today-badge-sidebar')) {
+                        const badgeSidebar = document.createElement('span');
+                        badgeSidebar.className = 'today-badge-sidebar inline-block ml-1.5 bg-[#C86240] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider';
+                        badgeSidebar.textContent = 'Hoje';
+                        drawerTitleSpan.after(badgeSidebar);
                     }
                 }
             }
@@ -659,7 +676,6 @@
             
             let todayDevo = devotionals.find(d => d.date === todayStr);
             if (!todayDevo) {
-                // Fallback de contingência caso os testes ocorram fora do período oficial da temporada (03/07)
                 todayDevo = devotionals.find(d => d.date === "03/07");
             }
             if (todayDevo) {
@@ -686,14 +702,28 @@
             }
         }
 
+        function handleRouting() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#dia-')) {
+                const day = parseInt(hash.replace('#dia-', ''));
+                if (day >= 1 && day <= devotionals.length) {
+                    openDevotional(day, false);
+                    return;
+                }
+            }
+            closeReader();
+        }
+
         function closeReader() {
+            // Se o hash atual não for vazio, remove-o de forma limpa sem registrar novo histórico
+            if (window.location.hash !== '' && window.location.hash !== '#') {
+                history.replaceState(null, null, ' ');
+            }
+
             // Mostra o painel principal e oculta a secção de leitura do ecrã
             document.getElementById('calendar-section').classList.remove('hidden');
             document.getElementById('dynamics-section').classList.remove('hidden');
             document.getElementById('reader-section').classList.add('hidden');
-            
-            // Oculta o botão de navegação rápida flutuante
-            document.getElementById('floating-menu-btn').classList.add('hidden');
             
             // Desativa o estado de leitor aberto e limpa a sessão para não travar no reload
             localStorage.setItem('apv_reader_open', 'false');
@@ -702,8 +732,12 @@
             // Limpa as marcas de seleção de leitura para manter o menu estético e limpo
             devotionals.forEach(d => {
                 const button = document.getElementById(`devo-btn-${d.day}`);
+                const drawerButton = document.getElementById(`drawer-btn-${d.day}`);
                 if (button) {
                     button.classList.remove('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
+                }
+                if (drawerButton) {
+                    drawerButton.classList.remove('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
                 }
             });
 
@@ -721,6 +755,11 @@
             currentActiveDay = dayNumber;
             localStorage.setItem('apv_last_day', dayNumber);
             localStorage.setItem('apv_reader_open', 'true');
+
+            // Altera o hash da URL para manter sincronia com o navegador e suporte ao botão "Voltar"
+            if (window.location.hash !== `#dia-${dayNumber}`) {
+                window.location.hash = `#dia-${dayNumber}`;
+            }
 
             // Destaca o dia ativo na listagem de cards e no menu lateral
             devotionals.forEach(d => {
