@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Chosen Palette: Identidade Orgânica (Fundo creme/areia #FAF8F5, azul-marinho profundo para estrutura #1E2D3D, terracota/argila #C86240 para calor espiritual e detalhes, ouro/mostarda #DCA134 para identidade e realeza). -->
-    <!-- Application Structure Plan: A estrutura em formato de 'Dashboard de Jornada' foi refinada para priorizar o foco rápido. O gráfico de tempo da "Hora Silenciosa" foi colocado em um painel expansível/retrátil, garantindo que o cronograma de dias seja a primeira atração visual para a equipe. Implementamos persistência de estado (localStorage) para que o usuário permaneça em seu fluxo diário de leitura, e controles de rodapé nas lições facilitam uma leitura sequencial tátil sem quebras de navegação. -->
+    <!-- Application Structure Plan: A estrutura em formato de 'Dashboard de Jornada' foi refinada para priorizar o foco rápido. O gráfico de tempo da "Hora Silenciosa" foi colocado em um painel expansível/retrátil, garantindo que o cronograma de dias seja a primeira atração visual para a equipe. Implementamos persistência de estado (localStorage) para que o utilizador permaneça em seu fluxo diário de leitura, e controlos de rodapé nas lições facilitam uma leitura sequencial tátil sem quebras de navegação. Adicionámos suporte a Service Worker para carregamento offline total de recursos externos e locais. -->
     <!-- Visualization & Content Choices: Informação do Relatório -> Objetivo -> Visualização -> Interação -> Justificativa -> Biblioteca/Método:
     1. Tempo da Hora Silenciosa -> Proporção e Método -> Gráfico de Rosca (Doughnut) -> Exibição sob demanda via gatilho expansível -> Evita poluição visual no carregamento inicial -> Chart.js com cores da paleta Identidade.
-    2. Progresso de Leitura -> Persistência de Estado -> Destaque visual no card do dia atual -> Leitura de estado via localStorage -> Garante usabilidade rápida no acampamento -> JS Nativo.
-    3. Navegação Interna -> Facilitar leitura contínua -> Botões flutuantes direcionais (←, ↑, →) -> Cliques nativos rápidos -> Melhora a experiência móvel -> DOM/Vanilla JS. -->
+    2. Progresso de Leitura -> Persistência de Estado -> Destaque visual no card do dia atual -> Leitura de estado via localStorage com reset ao fechar -> Garante usabilidade rápida no acampamento -> JS Nativo.
+    3. Navegação Interna -> Facilitar leitura contínua -> Botões flutuantes direcionais (←, ↑, →) e Menu Lateral (Drawer) -> Cliques nativos rápidos -> Melhora a experiência móvel -> DOM/Vanilla JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         .chart-container {
@@ -132,7 +132,7 @@
                 <button onclick="closeReader()" class="inline-flex items-center gap-2 text-sm font-bold text-[#C86240] hover:text-[#1E2D3D] transition-colors group">
                     <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Voltar para o Painel
                 </button>
-                <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 hover:text-blue-900 transition-colors">
+                <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#C86240] hover:text-orange-900 transition-colors">
                     <span>☰</span> Escolher Outro Dia
                 </button>
             </div>
@@ -181,7 +181,7 @@
                 </div>
 
                 <div class="bg-[#FAF8F5] p-6 rounded-lg border border-[#E5DCD3] shadow-inner">
-                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicação Prática</h4>
+                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicacao Prática</h4>
                     <p id="read-app" class="text-[#1E2D3D] font-medium leading-relaxed"></p>
                 </div>
             </div>
@@ -239,7 +239,7 @@
                 stage: "Motivação e chamado", focus: "Véspera da chegada dos primeiros acampantes.",
                 period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-[#E5DCD3]",
                 meb: {
-                    obs: "Quais opções de escolha Josué coloca diante do povo antes de declarar sua famosa declaração de compromisso?",
+                    obs: "Quais opções de escolha Josué coloca diante do povo antes de declarar sua própria decisão?",
                     int: "O povo estava cercado de deuses da Mesopotâmia e deuses dos amorreus. No contexto do acampamento, quais 'deuses modernos' (como necessidade de autoafirmação, preguiça, vaidade ou controle sobre as circunstâncias) tentarão competir com a sua decisão de servir unicamente ao Senhor?",
                     app: "A liderança e a diretoria do acampamento tomarão decisões ou estabelecerão regras com as quais você nem sempre concordará de imediato. Diante de uma norma estabelecida para a temporada, sua atitude íntima será de submissão humilde e cooperadora ou de murmuração silenciosa com os seus amigos mais próximos?"
                 }
@@ -462,16 +462,25 @@
             renderCalendar();
             renderDrawer();
             
-            // Tenta restaurar o progresso salvo no localStorage
+            // Tenta restaurar o progresso guardado no localStorage
             const savedDay = localStorage.getItem('apv_last_day');
             const readerWasOpen = localStorage.getItem('apv_reader_open') === 'true';
             
             if (savedDay && readerWasOpen) {
                 openDevotional(parseInt(savedDay), false);
             } else {
-                closeReader(); // isso garante o estado de menu inicial limpo
+                closeReader(); // Garante o estado limpo do menu inicial
             }
             highlightToday();
+
+            // Ativa o suporte de Service Worker para funcionalidade Offline se disponível
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then(reg => console.log('Service Worker registado com sucesso para uso offline!'))
+                        .catch(err => console.log('Falha ao registar o Service Worker offline:', err));
+                });
+            }
         }
 
         function renderChart() {
@@ -601,25 +610,33 @@
         }
 
         function highlightToday() {
+            // Deteta a data atual do telemóvel/dispositivo
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const todayStr = `${dd}/${mm}`; // "03/07"
+            const todayStr = `${dd}/${mm}`; // Ex: "03/07"
             
             const todayDevo = devotionals.find(d => d.date === todayStr);
             if (todayDevo) {
                 const btn = document.getElementById(`devo-btn-${todayDevo.day}`);
                 if (btn) {
-                    // Adiciona destaque com borda dourada/terracota
+                    // Adiciona destaque estético com borda terracota pulsante
                     btn.classList.add('ring-2', 'ring-[#C86240]', 'ring-offset-2', 'bg-amber-50/50');
                     
-                    // Adiciona o badge "HOJE" dinamicamente
+                    // Adiciona o selo de "Hoje" dinamicamente se não existir
                     const titleSpan = btn.querySelector('.font-semibold');
                     if (titleSpan && !btn.querySelector('.today-badge')) {
                         const badge = document.createElement('span');
                         badge.className = 'today-badge inline-block ml-2 bg-[#C86240] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse';
                         badge.textContent = 'Hoje';
                         titleSpan.after(badge);
+                    }
+
+                    // Se a Hora Silenciosa não estiver aberta, centra o ecrã no dia de hoje automaticamente
+                    if (localStorage.getItem('apv_reader_open') !== 'true') {
+                        setTimeout(() => {
+                            btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 400);
                     }
                 }
             }
@@ -645,18 +662,18 @@
         }
 
         function closeReader() {
-            // Oculta o leitor e exibe o menu/cronograma completo
+            // Mostra o painel principal e oculta a secção de leitura do ecrã
             document.getElementById('calendar-section').classList.remove('hidden');
             document.getElementById('dynamics-section').classList.remove('hidden');
             document.getElementById('reader-section').classList.add('hidden');
             
-            // Oculta o botão flutuante de menu lateral pois o menu principal já está na tela
+            // Oculta o botão de navegação rápida flutuante
             document.getElementById('floating-menu-btn').classList.add('hidden');
             
-            // Salva que o leitor foi fechado para não travar na última sessão no próximo reload
+            // Desativa o estado de leitor aberto para limpar a sessão em recarregamentos futuros
             localStorage.setItem('apv_reader_open', 'false');
 
-            // Limpa as classes de seleção de leitura para o menu ficar limpo
+            // Limpa as marcas de seleção de leitura para manter o menu estético e limpo
             devotionals.forEach(d => {
                 const button = document.getElementById(`devo-btn-${d.day}`);
                 if (button) {
@@ -664,10 +681,10 @@
                 }
             });
 
-            // Re-aplica o destaque do dia de hoje (03/07)
+            // Re-aplica as formatações e destaque do dia atual
             highlightToday();
             
-            // Centraliza o scroll de volta nas opções de dias de forma suave
+            // Centra o foco na secção do calendário completo de dias
             window.scrollTo({top: document.getElementById('calendar-section').offsetTop - 20, behavior: 'smooth'});
         }
 
