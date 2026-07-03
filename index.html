@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Hora Silenciosa - APV Inverno 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Tons de ardósia (slate) para fundo e texto, trazendo calma e foco, com azul-marinho (blue-900) para estrutura, e âmbar (amber-500) para destaques e calor espiritual. -->
+    <!-- Application Structure Plan: A estrutura em formato de 'Dashboard de Jornada' foi escolhida para facilitar o acesso diário em dispositivos móveis durante os 30 minutos de devocional. Ela inclui: 1) Um cabeçalho com gráfico interativo explicando a metodologia de tempo; 2) Uma linha do tempo (grid) visual dos 22 dias agrupados por períodos da temporada para navegação rápida; 3) Um painel de leitura limpo e focado, ativado ao clicar em um dia, revelando o conteúdo indutivo (MEB) por etapas. Esta arquitetura elimina a necessidade de rolagem infinita, permitindo que o membro da equipe encontre seu dia imediatamente e mantenha o foco no estudo. -->
+    <!-- Visualization & Content Choices: Informação do Relatório -> Objetivo -> Visualização -> Interação -> Justificativa -> Biblioteca/Método:
+    1. Tempo do Devocional (5m/15m/10m) -> Informar proporção -> Gráfico de Rosca (Doughnut) -> Tooltips dinâmicos -> Ajuda a visualizar como gastar os 30 minutos -> Chart.js.
+    2. Cronograma de 22 dias -> Organizar navegação -> Grid de botões coloridos por período -> Clique para carregar dados -> Permite ver o progresso da temporada e acessar o dia atual rápido -> HTML/CSS Grid (Sem SVG).
+    3. Conteúdo do Dia (MEB) -> Informar/Mudar foco -> Painel de leitura com seções destacadas -> Leitura limpa -> Foco total no texto bíblico e aplicação -> DOM/Vanilla JS dinâmico. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+            max-height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .period-badge {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <header class="bg-slate-900 text-white p-6 shadow-md text-center">
+        <h1 class="text-3xl font-bold tracking-tight">Hora Silenciosa APV</h1>
+        <p class="text-slate-300 mt-2 text-sm uppercase tracking-widest">Temporada de Inverno 2026 — Servindo de Coração</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-4 md:p-6 space-y-8">
+
+        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">A Dinâmica dos 30 Minutos</h2>
+            <p class="text-slate-600 mb-6 leading-relaxed">
+                Esta seção explica como otimizar seu tempo de devocional. Para que sua Hora Silenciosa não seja apenas uma leitura rápida, a liderança recomenda dividir seus 30 minutos de forma estratégica. O gráfico abaixo ilustra essa divisão de tempo para garantir preparação, meditação profunda e oração intercessória efetiva durante a correria do acampamento.
+            </p>
+            
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full md:w-1/2">
+                    <div class="chart-container">
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 space-y-4">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">🧭</span>
+                        <div>
+                            <h3 class="font-bold text-slate-800">1. Preparação e Leitura (5 min)</h3>
+                            <p class="text-sm text-slate-600">Ore pedindo luz ao Espírito Santo. Leia o texto com atenção aos detalhes.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">📖</span>
+                        <div>
+                            <h3 class="font-bold text-slate-800">2. Meditação Guiada - MEB (15 min)</h3>
+                            <p class="text-sm text-slate-600">Use as perguntas de Observação e Interpretação. Foque fortemente na Aplicação Prática.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">🙏</span>
+                        <div>
+                            <h3 class="font-bold text-slate-800">3. Oração e Memorização (10 min)</h3>
+                            <p class="text-sm text-slate-600">Ore respondendo a Deus, memorize a frase-chave e interceda pela equipe e acampantes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">A Jornada da Temporada</h2>
+            <p class="text-slate-600 mb-6 leading-relaxed">
+                Navegue pela estrutura da nossa temporada de inverno. Abaixo, você encontra os 22 dias divididos pelas 6 fases do acampamento (Preparo, Tweens, Teens e Despedida). Selecione o dia atual para carregar as escrituras, foco e as perguntas de Estudo Bíblico Indutivo (MEB) projetadas para o seu contexto específico hoje.
+            </p>
+
+            <div id="calendar-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+            </div>
+        </section>
+
+        <section id="reader-section" class="hidden bg-white rounded-xl shadow-lg border-t-4 border-blue-600 p-6 md:p-8 mt-8 scroll-mt-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
+                <div>
+                    <span id="read-period" class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block"></span>
+                    <h2 id="read-title" class="text-3xl font-extrabold text-slate-900 flex items-center gap-2"></h2>
+                    <p id="read-date" class="text-slate-500 text-sm font-medium mt-1"></p>
+                </div>
+                <div class="mt-4 md:mt-0 text-left md:text-right">
+                    <div id="read-verse" class="text-xl font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="col-span-1 md:col-span-2 space-y-6">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r">
+                        <p id="read-phrase" class="text-lg italic font-medium text-amber-900"></p>
+                    </div>
+                    
+                    <div class="flex gap-4 text-sm">
+                        <div class="bg-slate-50 p-3 rounded flex-1 border border-slate-100">
+                            <span class="block text-slate-400 text-xs uppercase font-bold mb-1">Etapa</span>
+                            <span id="read-stage" class="font-semibold text-slate-700"></span>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded flex-1 border border-slate-100">
+                            <span class="block text-slate-400 text-xs uppercase font-bold mb-1">Foco do Dia</span>
+                            <span id="read-focus" class="font-semibold text-slate-700"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2 flex items-center gap-2"><span>📚</span> Estudo Bíblico Indutivo (MEB)</h3>
+            
+            <div class="space-y-6">
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow transition">
+                    <h4 class="text-blue-800 font-bold mb-2 flex items-center gap-2 text-lg"><span>🔍</span> 1. Observação</h4>
+                    <p id="read-obs" class="text-slate-700 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow transition">
+                    <h4 class="text-blue-800 font-bold mb-2 flex items-center gap-2 text-lg"><span>💡</span> 2. Interpretação</h4>
+                    <p id="read-int" class="text-slate-700 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 shadow-inner">
+                    <h4 class="text-blue-900 font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicação Prática</h4>
+                    <p id="read-app" class="text-slate-800 font-medium leading-relaxed"></p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="window.scrollTo({top: document.getElementById('calendar-container').offsetTop - 20, behavior: 'smooth'})" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-full transition shadow-md">
+                    ⇡ Voltar para o Cronograma
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 text-sm mt-12">
+        <p>Temporada de Inverno 2026 — APV</p>
+        <p>Desenvolvido para Hora Silenciosa da Equipe</p>
+    </footer>
+
+    <script>
+        const devotionals = [
+            {
+                day: 1, date: "02/07", title: "PROPÓSITO", icon: "🎯", verse: "Colossenses 3.23-24",
+                phrase: "Servimos com o coração voltado para Deus, não para aplausos.",
+                stage: "Motivação e chamado", focus: "Primeiro dia oficial da equipe.",
+                period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-stone-200",
+                meb: {
+                    obs: "Paulo apresenta dois focos possíveis para o nosso trabalho diário: fazer 'para homens' ou fazer 'como para o Senhor'. De acordo com o versículo 23, qual deve ser a intensidade e a disposição de espírito em tudo o que fazemos?",
+                    int: "No versículo 24, qual é a garantia teológica que recebemos ao compreender que 'servimos a Cristo, o Senhor'? Como essa verdade redime e dá valor eterno a tarefas simples ou invisíveis que você terá que fazer nos treinamentos e organização dos setores?",
+                    app: "De forma prática, para quem você está trabalhando nesta temporada de inverno? Se nenhum líder notar o seu esforço hoje, o seu coração permanecerá em paz? Como isso afeta sua postura nas primeiras tarefas práticas de preparação hoje?"
+                }
+            },
+            {
+                day: 2, date: "03/07", title: "ENTREGA", icon: "👐", verse: "Romanos 12.1",
+                phrase: "Servir começa quando colocamos tudo no altar.",
+                stage: "Motivação e chamado", focus: "Consagração pessoal e física.",
+                period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-stone-200",
+                meb: {
+                    obs: "Quais são os três adjetivos que Paulo usa para qualificar o tipo de sacrifício que devemos apresentar a Deus? Qual é a motivação inicial que ele usa para nos rogar a fazer isso?",
+                    int: "O sacrifício no Antigo Testamento envolvia a morte de um animal no altar. No Novo Testamento, somos chamados a ser um 'sacrifício vivo'. Como o sacrifício de Cristo na cruz nos capacita e nos motiva a entregar nossas vidas e energias de forma voluntária ao serviço do Seu reino?",
+                    app: "O acampamento exige muito do nosso corpo físico (sono reduzido, cansaço nas pernas, frio de Atibaia). Você está pronto para entregar o seu corpo físico como um sacrifício agradável a Deus hoje? Existe alguma área de conforto ou direito pessoal que você ainda não colocou no altar para esta temporada?"
+                }
+            },
+            {
+                day: 3, date: "04/07", title: "DECISÃO", icon: "🏁", verse: "Josué 24.15b",
+                phrase: "Servir ao Senhor é uma escolha renovada todos os dias.",
+                stage: "Motivação e chamado", focus: "Véspera da chegada dos primeiros acampantes.",
+                period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-stone-200",
+                meb: {
+                    obs: "Quais opções de escolha Josué coloca diante do povo antes de declarar sua própria decisão? Quem ele inclui em sua famosa declaração de compromisso?",
+                    int: "O povo estava cercado de deuses da Mesopotâmia e deuses dos amorreus. No contexto do acampamento, quais 'deuses modernos' (como necessidade de autoafirmação, preguiça, vaidade ou controle sobre as circunstâncias) tentarão competir com a sua decisão de servir unicamente ao Senhor?",
+                    app: "Amanhã os primeiros Tweens chegam. A escolha de servir a Deus com integridade e alegria não é automática; ela exige decisão. Escreva ou ore fazendo um pacto pessoal com o Senhor de que, não importa as dificuldades da escala ou o cansaço, você escolherá servir a Ele nesta temporada."
+                }
+            },
+            {
+                day: 4, date: "05/07", title: "SERVIÇO", icon: "🧼", verse: "Marcos 10.45",
+                phrase: "Seguimos Jesus quando escolhemos servir.",
+                stage: "Dependência de Deus", focus: "Chegada dos acampantes (Tweens 1).",
+                period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-cyan-100",
+                meb: {
+                    obs: "Quais são as duas ações que Jesus afirma ser o propósito de Sua vinda ao mundo? O que Ele nega explicitamente como sendo a Sua motivação?",
+                    int: "A palavra 'resgate' indica o preço pago para libertar escravos. Sendo Jesus o Rei Soberano, como o Seu ato supremo de humilhação e serviço na cruz deve destruir todo o nosso orgulho e pretensão de querermos ser paparicados ou servidos pelos outros?",
+                    app: "Com a chegada dos primeiros acampantes hoje, é fácil focar na nossa posição ou autoridade. Como você pode imitar a Cristo hoje nos pequenos detalhes? Talvez ajudando a carregar uma mala pesada, limpando uma sujeira que não é sua ou acolhendo uma criança tímida com um sorriso sincero."
+                }
+            },
+            {
+                day: 5, date: "06/07", title: "CONFIANÇA", icon: "🔓", verse: "Provérbios 16.3",
+                phrase: "Entregar as obras ao Senhor traz descanso ao coração.",
+                stage: "Dependência de Deus", focus: "Primeiras 24 horas de programação ativa com as crianças.",
+                period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-cyan-100",
+                meb: {
+                    obs: "Qual é a ordem imperativa dada no início do provérbio? Qual é a promessa feita para os nossos pensamentos/planos como consequência direta?",
+                    int: "No original, a palavra para 'confiar' ou 'entregar' significa literalmente 'rolar um fardo de cima de si para cima de outro'. O que significa, em termos práticos e teológicos, rolar o peso dos resultados e do andamento da programação diária do acampamento para os ombros de Deus?",
+                    app: "Lidar com crianças pequenas pode gerar ansiedade sobre a segurança, a atenção deles nas mensagens ou o cumprimento dos horários. O que especificamente tem tirado a paz dos seus pensamentos hoje? Entregue esse fardo ao Senhor em oração agora e descanse na fidelidade dEle."
+                }
+            },
+            {
+                day: 6, date: "07/07", title: "FUNDAMENTO", icon: "🧱", verse: "Salmo 127.1",
+                phrase: "Só o que Deus constrói permanece.",
+                stage: "Dependência de Deus", focus: "Meio de semana. Perigo de confiar nas próprias habilidades.",
+                period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-cyan-100",
+                meb: {
+                    obs: "Quais são as duas figuras profissionais usadas pelo salmista no versículo 1? O que acontece com o trabalho de cada um deles se o Senhor não for o agente principal?",
+                    int: "O salmista qualifica o esforço autossuficiente como 'vão' (inútil). Como o orgulho ministerial nos tenta a achar que um bom jogo, uma boa palestra ou um bom teatro acontecem por causa do nosso talento natural ou preparo técnico, ignorando a ação do Espírito Santo?",
+                    app: "Se dependêssemos apenas do seu carisma pessoal ou da sua energia para transformar o coração de um Tween hoje, nada aconteceria. Identifique em qual área do seu serviço você tem agido no 'piloto automático', sem orar de verdade, e clame por total dependência do Senhor para a programação de hoje."
+                }
+            },
+            {
+                day: 7, date: "08/07", title: "RENOVO", icon: "🔄", verse: "Isaías 40.31",
+                phrase: "Deus renova forças que já se esgotaram.",
+                stage: "Dependência de Deus", focus: "Último dia de Tweens 1. Cansaço físico acumulado por correr com as crianças.",
+                period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-cyan-100",
+                meb: {
+                    obs: "Qual é a atitude necessária descrita no texto para recebermos a renovação de forças? Quais são as três descrições de movimento que caracterizam aqueles que são renovados?",
+                    int: "No verso 30, o profeta lembra que até os jovens mais vigorosos se cansam e caem. Por que a nossa força humana falha tão rápido no ministério e por que a força que vem de 'esperar no Senhor' é a única que se renova continuamente?",
+                    app: "Depois de dias correndo, gritando e cuidando de dezenas de crianças, o cansaço bateu forte. Onde você tem tentado recarregar sua bateria espiritual e física: no isolamento do celular ou buscando a presença dAquele que dá força ao cansado? Peça ao Senhor um renovo sobrenatural para fechar este primeiro período com chave de ouro."
+                }
+            },
+            {
+                day: 8, date: "09/07", title: "DESCANSO", icon: "🌙", verse: "Mateus 11.28",
+                phrase: "O descanso verdadeiro começa em Cristo.",
+                stage: "Dependência de Deus", focus: "Transição e recepção do segundo grupo de Tweens.",
+                period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-teal-100",
+                meb: {
+                    obs: "Quais são as duas condições das pessoas que Jesus convida a irem até Ele? O que Ele promete dar em troca?",
+                    int: "No contexto judaico, o fardo pesado referia-se ao jugo da lei imposto pelos fariseus. No contexto do acampamento, de que maneira a busca por perfeccionismo ministerial, a necessidade de provar nosso valor para os outros ou o ativismo religioso podem se tornar fardos pesados que nos cansam espiritualmente?",
+                    app: "O descanso que Jesus oferece não é apenas físico, é um descanso para a alma. Você está iniciando este segundo período de Tweens carregando a culpa de erros da semana passada ou a pressão de ter que ser perfeito? Vá até Jesus em oração agora e entregue esse cansaço a Ele."
+                }
+            },
+            {
+                day: 9, date: "10/07", title: "GRAÇA", icon: "🎁", verse: "2Coríntios 12.9",
+                phrase: "A graça sustenta quando a força acaba.",
+                stage: "Dependência de Deus", focus: "Paciência e dependência da graça no início do fim de semana.",
+                period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-teal-100",
+                meb: {
+                    obs: "Qual foi a resposta direta de Deus ao clamor de Paulo sobre o seu sofrimento? Em qual situação o poder de Deus atinge sua eficácia perfeita?",
+                    int: "Por que Deus prefere usar a nossa fraqueza e as nossas limitações em vez do nosso orgulho autossuficiente para manifestar o Seu poder redentor? Como a percepção da nossa fraqueza abre as portas para a dependência total da graça?",
+                    app: "Talvez hoje você esteja lidando com uma limitação real (dor de cabeça, falta de sono, paciência curta com uma criança difícil). Em vez de reclamar ou tentar fingir que é forte, como você pode se gloriar na sua fraqueza para que o poder de Cristo repouse sobre você nas próximas horas de programação?"
+                }
+            },
+            {
+                day: 10, date: "11/07", title: "MISERICÓRDIA", icon: "🌅", verse: "Lamentações 3.22-23",
+                phrase: "Cada manhã traz graça suficiente para hoje.",
+                stage: "Fidelidade no cansaço", focus: "Penúltimo dia de Tweens 2. Necessidade de renovação espiritual diária.",
+                period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-teal-100",
+                meb: {
+                    obs: "Por que o profeta afirma que não somos totalmente destruídos? Qual é a frequência com que as misericórdias do Senhor se renovam? Qual é o atributo de Deus exaltado no final?",
+                    int: "Jeremias escreveu essas palavras observando Jerusalém totalmente destruída e queimada. Como a verdade de que as misericórdias de Deus se renovam 'a cada manhã' impede que o peso dos fracassos, erros de comunicação ou impaciência de ontem destruam o seu ministério de hoje?",
+                    app: "Se ontem você falhou — perdeu a paciência, executou mal uma tarefa ou teve atitudes erradas —, hoje é um novo dia. Peça perdão ao Senhor, receba a misericórdia fresca que Ele preparou para esta manhã e sirva com o coração livre de culpas hoje."
+                }
+            },
+            {
+                day: 11, date: "12/07", title: "SOCORRO", icon: "🤝", verse: "Salmo 46.1",
+                phrase: "Deus está presente mesmo nos dias difíceis.",
+                stage: "Fidelidade no cansaço", focus: "Último dia de Tweens. Batalhas finais e preparação para a saída das crianças.",
+                period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-teal-100",
+                meb: {
+                    obs: "Quais são as três definições que o salmista dá sobre quem Deus é para nós na primeira parte do verso? Em que momentos Ele se revela como um socorro presente?",
+                    int: "O salmo fala de terra se movendo e montes balançando no meio dos mares. Como a certeza teológica de que Deus é o nosso 'refúgio' (onde nos escondemos) e 'fortaleza' (onde somos fortalecidos) nos mantém espiritualmente inabaláveis quando imprevistos de saúde, escala, clima ou infraestrutura acontecem no acampamento?",
+                    app: "Como você lida com os momentos de crise ou quando as coisas fogem do seu controle na programação? Com desespero e mau humor ou correndo para o refúgio da presença de Deus? Exercite parar por alguns segundos na correria de hoje para lembrar a si mesmo: 'Deus é o meu refúgio bem presente hoje'."
+                }
+            },
+            {
+                day: 12, date: "13/07", title: "FIDELIDADE", icon: "📌", verse: "Lucas 16.10",
+                phrase: "Deus valoriza a fidelidade nas pequenas coisas.",
+                stage: "Fidelidade no cansaço", focus: "Chegada dos Teens 1. A importância da integridade nos pequenos detalhes.",
+                period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-indigo-100",
+                meb: {
+                    obs: "Qual é a relação exata que Jesus estabelece entre o comportamento de alguém no 'pouco' (coisas ínfimas) e no 'muito' (coisas grandiosas)?",
+                    int: "Por que a forma como lidamos com tarefas pequenas, corriqueiras e sem visibilidade (como recolher o lixo, chegar no horário combinado na reunião da equipe ou preencher um relatório) é o maior termômetro do nosso caráter diante de Deus?",
+                    app: "Os adolescentes são extremamente observadores e detestam hipocrisia. Se eles virem você negligenciando pequenas ordens da liderança ou fazendo as coisas com preguiça, sua pregação perderá o valor para eles. Como você pode demonstrar fidelidade extrema nas tarefas invisíveis de hoje para honrar o nome de Cristo?"
+                }
+            },
+            {
+                day: 13, date: "14/07", title: "SECRETO", icon: "👁️", verse: "Mateus 6.3-4",
+                phrase: "O Pai vê o serviço que ninguém vê.",
+                stage: "Serviço invisível", focus: "Atuação nos bastidores e combate à vaidade.",
+                period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-indigo-100",
+                meb: {
+                    obs: "Que metáfora corporal Jesus usa para descrever o nível de discrição que devemos ter ao praticar o bem ou o serviço? Qual é a promessa feita sobre a atitude do Pai que vê em secreto?",
+                    int: "Por que o desejo por reconhecimento público, elogios dos líderes ou destaque nas redes sociais do acampamento anula a beleza espiritual do nosso serviço no reino de Deus? De que forma o Evangelho nos satisfaz a ponto de não precisarmos de aplausos humanos?",
+                    app: "Existe alguma tarefa na escala de hoje que você fará torcendo para que um líder veja e elogie? Ore pedindo que o Senhor purifique as suas intenções. Encontre alegria no fato de que o seu Pai celestial vê você em secreto e isso é mais do que suficiente."
+                }
+            },
+            {
+                day: 14, date: "15/07", title: "HUMILDADE", icon: "⬇️", verse: "1Pedro 5.5",
+                phrase: "A humildade nos mantém no lugar certo diante de Deus.",
+                stage: "Serviço invisível", focus: "Convivência e submissão mútua na equipe no meio da temporada.",
+                period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-indigo-100",
+                meb: {
+                    obs: "Qual deve ser a postura dos mais jovens em relação aos mais velhos/líderes? Com qual 'vestimenta' todos da equipe devem se cingir? Qual é a reação oposta de Deus diante de orgulhosos e humildes?",
+                    int: "O termo 'cingir-se' no grego remete ao ato de amarrar o avental de escravo antes de lavar os pés dos convidados (como Jesus fez). Como a humildade mútua blinda a equipe do APV contra fofocas, divisões, melindres e disputas por espaço ou atenção?",
+                    app: "Como você reage internamente quando recebe uma instrução de última hora, uma mudança de escala ou uma correção de um líder de setor? Com rebeldia silenciosa ou submissão alegre? Escolha se revestir do avental do serviço humilde hoje nas relações com seus companheiros."
+                }
+            },
+            {
+                day: 15, date: "16/07", title: "PUREZA", icon: "✨", verse: "Filipenses 2.14-15",
+                phrase: "Nosso testemunho aparece nas atitudes simples.",
+                stage: "Serviço invisível", focus: "Combate à murmuração decorrente do cansaço físico.",
+                period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-indigo-100",
+                meb: {
+                    obs: "Quais são as duas atitudes que Paulo proíbe terminantemente na realização de 'todas as coisas'? Quais são os frutos gerados na vida do cristão que evita essas atitudes?",
+                    int: "'Murmuração' é reclamar em voz baixa pelos cantos; 'contenda' é a discussão aberta e defensiva. Por que o hábito de murmurar do frio, da comida ou da escala destrói o nosso testemunho cristão e apaga o brilho da nossa luz diante de uma geração confusa de adolescentes?",
+                    app: "O cansaço acumulado é o maior gatilho para a reclamação. Policie as suas conversas no alojamento ou no refeitório hoje. Se sentir vontade de reclamar de algo, mude o foco e declare três motivos de gratidão a Deus. Seja luz através de uma atitude alegre e sem queixas hoje!"
+                }
+            },
+            {
+                day: 16, date: "17/07", title: "MANSIDÃO", icon: "💬", verse: "Provérbios 15.1",
+                phrase: "Palavras brandas preservam relacionamentos.",
+                stage: "Serviço invisível", focus: "Encerramento de Teens 1. Paciência no trato verbal sob pressão.",
+                period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-indigo-100",
+                meb: {
+                    obs: "Qual é a consequência direta de uma 'resposta branda'? Em contrapartida, qual é o efeito gerado pela 'palavra dura'?",
+                    int: "Mansidão não é fraqueza, mas sim o poder sob o controle do Espírito Santo. De que maneira as nossas respostas ríspidas, sarcásticas ou impacientes sob estresse de fim de semana revelam que estamos tentando defender nosso próprio ego em vez de refletir o amor paciente de Cristo?",
+                    app: "Os adolescentes costumam testar limites através de perguntas difíceis, ironias ou atitudes rebeldes. Como você responderá se um acampante ou colega de equipe for rude com você hoje? Decida, sob o controle do Espírito, usar palavras mansas que curam em vez de machucar."
+                }
+            },
+            {
+                day: 17, date: "18/07", title: "CONSTÂNCIA", icon: "🛣️", verse: "Gálatas 6.9",
+                phrase: "Persistir no bem é sinal de fé madura.",
+                stage: "Testemunho e relacionamentos", focus: "Início do último grupo de Teens. Combate à fadiga espiritual e inércia.",
+                period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-violet-100",
+                meb: {
+                    obs: "Qual é a exortação prática sobre 'fazer o bem'? Qual é a condição temporal e espiritual estabelecida para colhermos os frutos?",
+                    int: "A expressão 'não desfalecer' significa não perder o ânimo ou relaxar o esforço. Por que tendemos a desanimar quando não vemos frutos espirituais imediatos nos adolescentes? Como a perseverança de Cristo, que foi fiel até a morte, nos sustenta a continuar semeando hoje?",
+                    app: "O entusiasmo do início da temporada já passou e o corpo pede descanso. Mas uma nova turma de Teens acabou de chegar e eles merecem o mesmo amor e dedicação do primeiro dia de acampamento. Onde você precisa renovar sua persistência hoje para não fazer o seu trabalho de qualquer jeito?"
+                }
+            },
+            {
+                day: 18, date: "19/07", title: "EXEMPLO", icon: "👣", verse: "1Timóteo 4.12",
+                phrase: "Somos chamados a viver a fé visivelmente.",
+                stage: "Testemunho e relacionamentos", focus: "Integridade prática diante de jovens que buscam referências.",
+                period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-violet-100",
+                meb: {
+                    obs: "O que Paulo diz para Timóteo não permitir que façam com ele? Em quais cinco áreas específicas ele deve se tornar um padrão/exemplo para os fiéis?",
+                    int: "Timóteo era jovem e enfrentava preconceitos. Como o nosso comportamento prático e silencioso (especialmente na palavra, no procedimento e no amor) valida e dá autoridade espiritual às mensagens e conselhos bíblicos que damos aos adolescentes?",
+                    app: "Os Teens estão o tempo todo avaliando se o que falamos nas devocionais do quarto combina com o que fazemos nas horas livres. Qual dessas cinco áreas mencionadas por Paulo (palavra, procedimento, amor, fé, pureza) precisa de uma intervenção urgente do Espírito Santo na sua vida hoje?"
+                }
+            },
+            {
+                day: 19, date: "20/07", title: "LUZ", icon: "💡", verse: "Mateus 5.16",
+                phrase: "Nossa vida aponta para a glória de Deus.",
+                stage: "Testemunho e relacionamentos", focus: "Atitude evangelística e direcionamento da glória para o Pai.",
+                period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-violet-100",
+                meb: {
+                    obs: "De qual maneira a nossa luz deve brilhar diante das pessoas? Qual deve ser a reação natural delas ao contemplarem as nossas boas obras?",
+                    int: "Brilhar a nossa luz não significa exibir uma espiritualidade orgulhosa para sermos elogiados, mas sim refletir o caráter de Cristo. De que forma o orgulho de querermos ser considerados os 'melhores conselheiros' ou os mais 'legais' rouba a glória que pertence unicamente a Deus?",
+                    app: "Quando os acampantes começam a se apegar a você ou elogiar sua dedicação, como você direciona esse carinho? Ore hoje pedindo que cada sorriso, abraço e palavra sua sirva como uma seta apontando os adolescentes para a beleza do Pai celestial, e não para você."
+                }
+            },
+            {
+                day: 20, date: "21/07", title: "SUPORTE", icon: "🔗", verse: "Romanos 15.1",
+                phrase: "Servimos melhor quando carregamos uns aos outros.",
+                stage: "Testemunho e relacionamentos", focus: "Meio de semana. Cuidado mútuo na reta final quando o estresse aumenta.",
+                period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-violet-100",
+                meb: {
+                    obs: "Qual é o dever explícito dos que são fortes em relação às fraquezas dos fracos? O que os fortes devem evitar fazer em relação a si mesmos?",
+                    int: "'Suportar' aqui significa carregar ativamente o fardo de alguém, ajudando-o a caminhar. Como o sacrifício de Jesus Cristo — que carregou sobre si as nossas dores e enfermidades espirituais — nos dá a base teológica para tolerar e ajudar os irmãos de equipe cansados ou irritados?",
+                    app: "Há algum companheiro no seu setor que está visivelmente esgotado, cometendo erros simples ou isolado? Em vez de criticar ou comentar com terceiros (fofoca), o que você pode fazer hoje na prática para ajudá-lo a carregar o fardo das tarefas diárias?"
+                }
+            },
+            {
+                day: 21, date: "22/07", title: "AMOR", icon: "❤️", verse: "João 13.34-35",
+                phrase: "O amor é a marca mais visível do discípulo.",
+                stage: "Perseverança até o fim", focus: "Último dia com acampantes. Despedida dos Teens 2 e noite de decisões.",
+                period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-violet-100",
+                meb: {
+                    obs: "Qual é o 'novo mandamento' que Jesus deixa para Seus seguidores? Qual é a régua/padrão que Ele estabelece para esse amor? O que esse amor mútuo revelará publicamente ao mundo?",
+                    int: "Por que o amor mútuo dentro de uma equipe ministerial é a ferramenta apologética e evangelística mais poderosa diante dos adolescentes do acampamento, muito mais do que qualquer palestra ou estrutura de som?",
+                    app: "Hoje é o dia de despedida dos acampantes e noite de apelo/decisões. O cansaço físico está no limite máximo. Como você demonstrará o amor de Cristo de forma prática para os acampantes do seu quarto e para os colegas de setor hoje, mesmo estando exausto?"
+                }
+            },
+            {
+                day: 22, date: "23/07", title: "RECOMPENSA", icon: "🏆", verse: "Hebreus 6.10",
+                phrase: "Deus não se esquece de nenhum serviço fiel.",
+                stage: "Perseverança até o fim", focus: "Último dia da equipe. Fechamento e envio para a igreja local.",
+                period: "Despedida da Equipe", periodDates: "23/07", periodIcon: "🌅", periodColor: "bg-amber-100",
+                meb: {
+                    obs: "O que o autor de Hebreus afirma que Deus não é, garantindo que Ele jamais esquecerá o nosso trabalho? Quais são as duas evidências de amor que o povo de Deus demonstrou ao Seu nome?",
+                    int: "No contexto do acampamento, muitas lágrimas foram choradas em secreto, orações foram feitas de joelhos no chão frio e tarefas exaustivas foram cumpridas sem que nenhum líder humano visse. Como a justiça perfeita de Deus conforta o nosso coração de que nada foi desperdiçado ou em vão?",
+                    app: "A temporada acabou, as malas estão prontas e o cansaço é real. Ao olhar para trás hoje, você tem a convicção de ter servido ao Senhor com integridade? Como saber que Deus se lembra de cada pequeno ato de amor te motiva a continuar servindo com fidelidade na sua igreja local, na faculdade ou na sua rotina diária a partir de amanhã?"
+                }
+            }
+        ];
+
+        function initApp() {
+            renderChart();
+            renderCalendar();
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('timeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Preparação e Leitura (5m)', 'Meditação MEB (15m)', 'Oração e Resposta (10m)'],
+                    datasets: [{
+                        data: [5, 15, 10],
+                        backgroundColor: [
+                            '#94a3b8', 
+                            '#3b82f6', 
+                            '#f59e0b'  
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    family: "'system-ui', 'sans-serif'"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label.split(' (')[0] + ': ' + context.raw + ' minutos';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        function renderCalendar() {
+            const container = document.getElementById('calendar-container');
+            const periods = [...new Set(devotionals.map(item => item.period))];
+
+            periods.forEach(periodName => {
+                const periodDevos = devotionals.filter(d => d.period === periodName);
+                const pColor = periodDevos[0].periodColor;
+                const pIcon = periodDevos[0].periodIcon;
+                const pDates = periodDevos[0].periodDates;
+
+                const card = document.createElement('div');
+                card.className = `border border-slate-200 rounded-xl overflow-hidden flex flex-col`;
+                
+                let buttonsHTML = '';
+                periodDevos.forEach(devo => {
+                    buttonsHTML += `
+                        <button onclick="openDevotional(${devo.day})" class="w-full text-left px-4 py-3 border-t border-slate-100 hover:bg-white flex justify-between items-center group transition-colors">
+                            <div>
+                                <span class="text-xs font-bold text-slate-400 block">DIA ${devo.day} • ${devo.date}</span>
+                                <span class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">${devo.icon} ${devo.title}</span>
+                            </div>
+                            <span class="text-slate-300 group-hover:text-blue-500 transition-colors">➔</span>
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="${pColor} px-4 py-3 border-b border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">${pIcon}</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800 leading-tight">${periodName}</h3>
+                                <span class="text-xs font-semibold text-slate-600">${pDates}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 flex-grow">
+                        ${buttonsHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openDevotional(dayNumber) {
+            const devo = devotionals.find(d => d.day === dayNumber);
+            if (!devo) return;
+
+            document.getElementById('read-period').textContent = devo.period;
+            document.getElementById('read-title').innerHTML = `${devo.icon} ${devo.title}`;
+            document.getElementById('read-date').textContent = `Dia ${devo.day} • ${devo.date}`;
+            document.getElementById('read-verse').textContent = devo.verse;
+            document.getElementById('read-phrase').textContent = `"${devo.phrase}"`;
+            document.getElementById('read-stage').textContent = devo.stage;
+            document.getElementById('read-focus').textContent = devo.focus;
+            
+            document.getElementById('read-obs').textContent = devo.meb.obs;
+            document.getElementById('read-int').textContent = devo.meb.int;
+            document.getElementById('read-app').textContent = devo.meb.app;
+
+            const readerSection = document.getElementById('reader-section');
+            readerSection.classList.remove('hidden');
+            
+            readerSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = initApp;
+    </script>
+</body>
+</html>
