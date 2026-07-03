@@ -46,7 +46,7 @@
     <main class="max-w-5xl mx-auto p-4 md:p-6 space-y-6">
 
         <!-- CONTEÚDO EXPANSÍVEL: Dinâmica dos 30 minutos agora sob demanda com foco de "Instruções de Uso" -->
-        <details class="bg-white rounded-xl shadow-sm border border-[#E5DCD3] overflow-hidden group transition-all duration-300">
+        <details id="dynamics-section" class="bg-white rounded-xl shadow-sm border border-[#E5DCD3] overflow-hidden group transition-all duration-300">
             <summary class="p-5 font-bold text-lg md:text-xl text-[#1E2D3D] cursor-pointer flex justify-between items-center select-none list-none">
                 <div class="flex items-center gap-3">
                     <span>🧭</span>
@@ -89,7 +89,7 @@
         </details>
 
         <!-- SEÇÃO PRINCIPAL: Cronograma de Dias (Carregada diretamente) -->
-        <section class="bg-white rounded-xl shadow-sm p-6 border border-[#E5DCD3]">
+        <section id="calendar-section" class="bg-white rounded-xl shadow-sm p-6 border border-[#E5DCD3]">
             <h2 class="text-2xl font-bold text-slate-800 mb-2">Jornada de Inverno</h2>
             <p class="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">
                 Selecione abaixo o dia da sua jornada para ter acesso às orientações, leituras e perguntas do Método de Estudo Bíblico Indutivo (MEB) da sua Hora Silenciosa.
@@ -101,7 +101,16 @@
         </section>
 
         <!-- LEITOR INDUTIVO (Oculto até um dia ser selecionado) -->
-        <section id="reader-section" class="hidden bg-white rounded-xl shadow-lg border-t-4 border-blue-600 p-6 md:p-8 mt-8 scroll-mt-6">
+        <section id="reader-section" class="hidden bg-white rounded-xl shadow-lg border-t-4 border-[#C86240] p-6 md:p-8 mt-8 scroll-mt-6">
+            
+            <!-- Botão Superior de Retorno Rápido ao Menu -->
+            <div class="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+                <button onclick="closeReader()" class="inline-flex items-center gap-2 text-sm font-bold text-[#C86240] hover:text-[#1E2D3D] transition-colors group">
+                    <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Voltar para a Jornada Completa
+                </button>
+                <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Modo Leitura Ativo</span>
+            </div>
+
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
                 <div>
                     <span id="read-period" class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block"></span>
@@ -158,7 +167,7 @@
                 </button>
                 
                 <button id="nav-up-btn" class="bg-[#1E2D3D] hover:bg-[#2D4255] text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
-                    <span>↑</span> <span class="hidden sm:inline">Topo / Menu</span>
+                    <span>↑</span> <span class="hidden sm:inline">Menu Inicial</span>
                 </button>
                 
                 <button id="nav-next-btn" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
@@ -283,7 +292,7 @@
                 meb: {
                     obs: "Por que o profeta afirma que não somos totalmente destruídos? Qual é a frequência com que as misericórdias do Senhor se renovam? Qual é o atributo de Deus exaltado no final?",
                     int: "Jeremias escreveu essas palavras observando Jerusalém totalmente destruída e queimada. Como a verdade de que as misericórdias de Deus se renovam 'a cada manhã' impede que o peso dos fracassos, erros de comunicação ou impaciência de ontem destruam o seu ministério de hoje?",
-                    app: "Se ontem você falhou — foi impontual nos horários, fez corpo mole em uma tarefa que não queria cumprir ou murmurou sobre regras do acampamento com outros equipantes —, hoje é um novo dia. Peça perdão ao Senhor, alinhe sua postura prática à verdade e recomece com inteira fidelidade."
+                    app: "Se ontem você falhou — foi impontual nos horários, fez corpo mole em uma tarefa que não queria cumprir ou murmurou sobre regras do acampamento com outros equipantes —, hoje é un novo dia. Peça perdão ao Senhor, alinhe sua postura prática à verdade e recomece com inteira fidelidade."
                 }
             },
             {
@@ -393,7 +402,7 @@
                 meb: {
                     obs: "Qual é o dever explícito dos que são fortes em relação às fraquezas dos fracos? O que os fortes devem evitar fazer em relação a si mesmos?",
                     int: "'Suportar' aqui significa carregar ativamente o fardo de alguém, ajudando-o a caminhar. Como o sacrifício de Jesus Cristo — que carregou sobre si as nossas dores e enfermidades espirituais — nos dá a base teológica para tolerar e ajudar os irmãos de equipe cansados ou irritados?",
-                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). Mas o suporte mútuo no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
+                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). But o suporte mútuo no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
                 }
             },
             {
@@ -520,6 +529,16 @@
             });
         }
 
+        function closeReader() {
+            // Oculta o leitor e exibe o menu/cronograma completo
+            document.getElementById('calendar-section').classList.remove('hidden');
+            document.getElementById('dynamics-section').classList.remove('hidden');
+            document.getElementById('reader-section').classList.add('hidden');
+            
+            // Centraliza o scroll de volta nas opções de dias de forma suave
+            window.scrollTo({top: document.getElementById('calendar-section').offsetTop - 20, behavior: 'smooth'});
+        }
+
         function openDevotional(dayNumber, shouldScroll = true) {
             const devo = devotionals.find(d => d.day === dayNumber);
             if (!devo) return;
@@ -538,6 +557,10 @@
                     }
                 }
             });
+
+            // Oculta as seções de menu para dar foco total à leitura (usabilidade mobile)
+            document.getElementById('calendar-section').classList.add('hidden');
+            document.getElementById('dynamics-section').classList.add('hidden');
 
             // Carrega dados no leitor
             document.getElementById('read-period').textContent = devo.period;
@@ -571,15 +594,14 @@
                 nextBtn.onclick = () => openDevotional(dayNumber + 1, true);
             }
 
-            upBtn.onclick = () => {
-                window.scrollTo({top: document.getElementById('calendar-container').offsetTop - 40, behavior: 'smooth'});
-            };
+            // Atribui a função de fechar o leitor ao botão de menu central
+            upBtn.onclick = closeReader;
 
             const readerSection = document.getElementById('reader-section');
             readerSection.classList.remove('hidden');
             
             if (shouldScroll) {
-                readerSection.scrollIntoView({ behavior: 'smooth' });
+                window.scrollTo({top: 0, behavior: 'smooth'});
             }
         }
 
