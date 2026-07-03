@@ -38,6 +38,30 @@
 </head>
 <body class="antialiased pb-24">
 
+    <!-- Fundo escuro atrás do Menu Lateral (Drawer Backdrop) -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 opacity-0" onclick="toggleDrawer(false)"></div>
+    
+    <!-- Menu Lateral Deslizante (Drawer Panel) -->
+    <div id="sidebar-drawer" class="fixed top-0 left-0 w-80 h-full bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-r border-[#E5DCD3]">
+        <div class="p-4 bg-[#1E2D3D] text-[#FAF8F5] flex justify-between items-center border-b border-[#C86240]/20">
+            <div>
+                <h3 class="font-bold text-lg">Jornada de Inverno</h3>
+                <span class="text-xs text-[#FAF8F5]/60">Selecione uma Hora Silenciosa</span>
+            </div>
+            <button onclick="toggleDrawer(false)" class="text-[#FAF8F5]/80 hover:text-white text-xl font-bold p-1">✕</button>
+        </div>
+        <div class="flex-grow overflow-y-auto p-4 bg-[#FAF8F5]">
+            <!-- Conteúdo do menu lateral injetado via JS -->
+            <div id="drawer-content" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Botão Flutuante de Menu Lateral (FAB) - Visível apenas quando o leitor está aberto -->
+    <button id="floating-menu-btn" onclick="toggleDrawer(true)" class="fixed bottom-6 right-6 bg-[#C86240] hover:bg-[#B35233] text-white p-4 rounded-full shadow-2xl z-30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 font-bold text-sm md:text-base hidden border border-[#FAF8F5]/20">
+        <span>☰</span>
+        <span>Escolher Dia</span>
+    </button>
+
     <header class="bg-[#1E2D3D] text-[#FAF8F5] p-6 shadow-md text-center border-b border-[#C86240]/20">
         <h1 class="text-3xl font-bold tracking-tight">Hora Silenciosa APV</h1>
         <p class="text-[#FAF8F5]/80 mt-2 text-sm uppercase tracking-widest font-medium">Temporada de Inverno 2026 — Identidade</p>
@@ -106,9 +130,11 @@
             <!-- Botão Superior de Retorno Rápido ao Menu -->
             <div class="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
                 <button onclick="closeReader()" class="inline-flex items-center gap-2 text-sm font-bold text-[#C86240] hover:text-[#1E2D3D] transition-colors group">
-                    <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Voltar para a Jornada Completa
+                    <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Voltar para o Painel
                 </button>
-                <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Modo Leitura Ativo</span>
+                <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-700 hover:text-blue-900 transition-colors">
+                    <span>☰</span> Escolher Outro Dia
+                </button>
             </div>
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
@@ -213,7 +239,7 @@
                 stage: "Motivação e chamado", focus: "Véspera da chegada dos primeiros acampantes.",
                 period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-[#E5DCD3]",
                 meb: {
-                    obs: "Quais opções de escolha Josué coloca diante do povo antes de declarar sua própria decisão? Quem ele inclui em sua famosa declaração de compromisso?",
+                    obs: "Quais opções de escolha Josué coloca diante do povo antes de declarar sua famosa declaração de compromisso?",
                     int: "O povo estava cercado de deuses da Mesopotâmia e deuses dos amorreus. No contexto do acampamento, quais 'deuses modernos' (como necessidade de autoafirmação, preguiça, vaidade ou controle sobre as circunstâncias) tentarão competir com a sua decisão de servir unicamente ao Senhor?",
                     app: "A liderança e a diretoria do acampamento tomarão decisões ou estabelecerão regras com as quais você nem sempre concordará de imediato. Diante de uma norma estabelecida para a temporada, sua atitude íntima será de submissão humilde e cooperadora ou de murmuração silenciosa com os seus amigos mais próximos?"
                 }
@@ -330,7 +356,7 @@
             },
             {
                 day: 14, date: "15/07", title: "HUMILDADE", icon: "⬇️", verse: "1Pedro 5.5",
-                phrase: "A humildade nos mantém no lugar certo diante de Deus.",
+                phrase: "A humility nos mantém no lugar certo diante de Deus.",
                 stage: "Serviço invisível", focus: "Convivência e submissão mútua na equipe no meio da temporada.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
                 meb: {
@@ -402,7 +428,7 @@
                 meb: {
                     obs: "Qual é o dever explícito dos que são fortes em relação às fraquezas dos fracos? O que os fortes devem evitar fazer em relação a si mesmos?",
                     int: "'Suportar' aqui significa carregar ativamente o fardo de alguém, ajudando-o a caminhar. Como o sacrifício de Jesus Cristo — que carregou sobre si as nossas dores e enfermidades espirituais — nos dá a base teológica para tolerar e ajudar os irmãos de equipe cansados ou irritados?",
-                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). But o suporte mútuo no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
+                    app: "É natural e confortável usar seu pouco tempo livre para se relacionar apenas com seus 'chegados' (sua panelinha). Mas o suporte mútuo no acampamento exige romper essa bolha para notar e apoiar os equipantes de outros setores ou do seu próprio grupo que se sentem sós ou excluídos. De quem você se aproximará hoje para caminhar junto?"
                 }
             },
             {
@@ -424,7 +450,7 @@
                 meb: {
                     obs: "O que o autor de Hebreus afirma que Deus não é, garantindo que Ele jamais esquecerá o nosso trabalho? Quais são as duas evidências de amor que o povo de Deus demonstrou ao Seu nome?",
                     int: "No contexto do acampamento, muitas lágrimas foram choradas em secreto, orações foram feitas de joelhos no chão frio e tarefas exaustivas foram cumpridas sem que nenhum líder humano visse. Como a justiça perfeita de Deus conforta o nosso coração de que nada foi desperdiçado ou em vão?",
-                    app: "A temporada acabou e o seu setor pode ter sido humilde ou não-reconhecido. A sua alma está satisfeita apenas com a recompensa d'Aquele que vê as intenções do seu coração, ou você se despede de Atibaia frustrado pela falta de elogios dos homens ou com falso orgulho de santidade por seu desempenho pessoal? Entregue suas obras a Ele!"
+                    app: "A temporada acabou, as malas estão prontas e o cansaço é real. Ao olhar para trás hoje, você tem a convicção de ter servido ao Senhor com integridade? Como saber que Deus se lembra de cada pequeno ato de amor te motiva a continuar servindo com fidelidade na sua igreja local, na faculdade ou na sua rotina diária a partir de amanhã?"
                 }
             }
         ];
@@ -434,6 +460,7 @@
         function initApp() {
             renderChart();
             renderCalendar();
+            renderDrawer();
             
             // Tenta restaurar o progresso salvo no localStorage
             const savedDay = localStorage.getItem('apv_last_day');
@@ -529,11 +556,72 @@
             });
         }
 
+        function renderDrawer() {
+            const drawerContainer = document.getElementById('drawer-content');
+            drawerContainer.innerHTML = '';
+            const periods = [...new Set(devotionals.map(item => item.period))];
+
+            periods.forEach(periodName => {
+                const periodDevos = devotionals.filter(d => d.period === periodName);
+                const pColor = periodDevos[0].periodColor;
+                const pIcon = periodDevos[0].periodIcon;
+
+                const groupDiv = document.createElement('div');
+                groupDiv.className = `border border-[#E5DCD3] rounded-lg overflow-hidden flex flex-col mb-4`;
+                
+                let buttonsHTML = '';
+                periodDevos.forEach(devo => {
+                    buttonsHTML += `
+                        <button id="drawer-btn-${devo.day}" onclick="openDevotional(${devo.day}, true); toggleDrawer(false);" class="w-full text-left px-3 py-2 border-t border-slate-100 hover:bg-slate-100 flex justify-between items-center group transition-colors">
+                            <div class="text-sm">
+                                <span class="text-[10px] font-bold text-slate-400 block">DIA ${devo.day} • ${devo.date}</span>
+                                <span class="font-semibold text-[#1E2D3D] group-hover:text-[#C86240]">${devo.icon} ${devo.title}</span>
+                            </div>
+                            <span class="text-slate-300 text-xs group-hover:text-[#C86240]">➔</span>
+                        </button>
+                    `;
+                });
+
+                groupDiv.innerHTML = `
+                    <div class="${pColor} px-3 py-2 border-b border-[#E5DCD3] flex items-center gap-2">
+                        <span class="text-lg">${pIcon}</span>
+                        <span class="font-bold text-xs text-[#1E2D3D]">${periodName}</span>
+                    </div>
+                    <div class="bg-white">
+                        ${buttonsHTML}
+                    </div>
+                `;
+                drawerContainer.appendChild(groupDiv);
+            });
+        }
+
+        function toggleDrawer(isOpen) {
+            const drawer = document.getElementById('sidebar-drawer');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            
+            if (isOpen) {
+                drawer.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => {
+                    backdrop.classList.add('opacity-100');
+                }, 10);
+            } else {
+                drawer.classList.add('-translate-x-full');
+                backdrop.classList.remove('opacity-100');
+                setTimeout(() => {
+                    backdrop.classList.add('hidden');
+                }, 300);
+            }
+        }
+
         function closeReader() {
             // Oculta o leitor e exibe o menu/cronograma completo
             document.getElementById('calendar-section').classList.remove('hidden');
             document.getElementById('dynamics-section').classList.remove('hidden');
             document.getElementById('reader-section').classList.add('hidden');
+            
+            // Oculta o botão flutuante de menu lateral pois o menu principal já está na tela
+            document.getElementById('floating-menu-btn').classList.add('hidden');
             
             // Centraliza o scroll de volta nas opções de dias de forma suave
             window.scrollTo({top: document.getElementById('calendar-section').offsetTop - 20, behavior: 'smooth'});
@@ -546,9 +634,10 @@
             currentActiveDay = dayNumber;
             localStorage.setItem('apv_last_day', dayNumber);
 
-            // Destaca o dia ativo na listagem de cards
+            // Destaca o dia ativo na listagem de cards e no menu lateral
             devotionals.forEach(d => {
                 const button = document.getElementById(`devo-btn-${d.day}`);
+                const drawerButton = document.getElementById(`drawer-btn-${d.day}`);
                 if (button) {
                     if (d.day === dayNumber) {
                         button.classList.add('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
@@ -556,11 +645,21 @@
                         button.classList.remove('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
                     }
                 }
+                if (drawerButton) {
+                    if (d.day === dayNumber) {
+                        drawerButton.classList.add('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
+                    } else {
+                        drawerButton.classList.remove('bg-[#FAF8F5]/85', 'border-l-4', 'border-l-[#C86240]');
+                    }
+                }
             });
 
             // Oculta as seções de menu para dar foco total à leitura (usabilidade mobile)
             document.getElementById('calendar-section').classList.add('hidden');
             document.getElementById('dynamics-section').classList.add('hidden');
+
+            // Torna o botão flutuante de menu de dias visível
+            document.getElementById('floating-menu-btn').classList.remove('hidden');
 
             // Carrega dados no leitor
             document.getElementById('read-period').textContent = devo.period;
