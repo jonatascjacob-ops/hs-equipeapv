@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,11 +25,13 @@
             height: 250px;
             max-height: 300px;
         }
+
         @media (min-width: 768px) {
             .chart-container {
                 height: 300px;
             }
         }
+
         body {
             background-color: #FAF8F5;
             color: #1E2D3D;
@@ -36,19 +39,24 @@
         }
     </style>
 </head>
+
 <body class="antialiased pb-24">
 
     <!-- Fundo escuro atrás do Menu Lateral (Drawer Backdrop) -->
-    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 opacity-0" onclick="toggleDrawer(false)"></div>
-    
+    <div id="sidebar-backdrop"
+        class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 opacity-0"
+        onclick="toggleDrawer(false)"></div>
+
     <!-- Menu Lateral Deslizante (Drawer Panel) -->
-    <div id="sidebar-drawer" class="fixed top-0 left-0 w-80 h-full bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-r border-[#E5DCD3]">
+    <div id="sidebar-drawer"
+        class="fixed top-0 left-0 w-80 h-full bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-r border-[#E5DCD3]">
         <div class="p-4 bg-[#1E2D3D] text-[#FAF8F5] flex justify-between items-center border-b border-[#C86240]/20">
             <div>
                 <h3 class="font-bold text-lg">Jornada de Inverno</h3>
                 <span class="text-xs text-[#FAF8F5]/60">Selecione uma Hora Silenciosa</span>
             </div>
-            <button onclick="toggleDrawer(false)" class="text-[#FAF8F5]/80 hover:text-white text-xl font-bold p-1">✕</button>
+            <button onclick="toggleDrawer(false)"
+                class="text-[#FAF8F5]/80 hover:text-white text-xl font-bold p-1">✕</button>
         </div>
         <div class="flex-grow overflow-y-auto p-4 bg-[#FAF8F5]">
             <!-- Conteúdo do menu lateral injetado via JS -->
@@ -58,14 +66,17 @@
 
     <header class="bg-[#1E2D3D] text-[#FAF8F5] p-6 shadow-md text-center border-b border-[#C86240]/20">
         <h1 class="text-3xl font-bold tracking-tight">Hora Silenciosa APV</h1>
-        <p class="text-[#FAF8F5]/80 mt-2 text-sm uppercase tracking-widest font-medium">Temporada de Inverno 2026 — Identidade</p>
+        <p class="text-[#FAF8F5]/80 mt-2 text-sm uppercase tracking-widest font-medium">Temporada de Inverno 2026 —
+            Identidade</p>
     </header>
 
     <main class="max-w-5xl mx-auto p-4 md:p-6 space-y-6">
 
         <!-- CONTEÚDO EXPANSÍVEL: Dinâmica dos 30 minutos agora sob demanda com foco de "Instruções de Uso" -->
-        <details id="dynamics-section" class="bg-white rounded-xl shadow-sm border border-[#E5DCD3] overflow-hidden group transition-all duration-300">
-            <summary class="p-5 font-bold text-lg md:text-xl text-[#1E2D3D] cursor-pointer flex justify-between items-center select-none list-none">
+        <details id="dynamics-section"
+            class="bg-white rounded-xl shadow-sm border border-[#E5DCD3] overflow-hidden group transition-all duration-300">
+            <summary
+                class="p-5 font-bold text-lg md:text-xl text-[#1E2D3D] cursor-pointer flex justify-between items-center select-none list-none">
                 <div class="flex items-center gap-3">
                     <span>🧭</span>
                     <span>Como funciona a Hora Silenciosa de 30 min?</span>
@@ -73,7 +84,7 @@
                 <span class="text-[#C86240] text-sm font-semibold group-open:hidden">Como usar este guia ➔</span>
                 <span class="text-slate-500 text-sm font-semibold hidden group-open:inline">Recolher ✖</span>
             </summary>
-            
+
             <div class="p-6 border-t border-[#E5DCD3] bg-[#FAF8F5]/50 flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/2">
                     <div class="chart-container">
@@ -81,36 +92,65 @@
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 space-y-4">
+                    <p class="text-xs text-slate-500 italic mb-2 border-b pb-2">Ancoragem Metodológica: Baseado no
+                        método histórico-crítico e teologia bíblica redentora de Uwe Wegner, Bryan Chapell e James M.
+                        Hamilton Jr.</p>
                     <div class="flex items-start gap-3">
                         <span class="text-2xl">🧭</span>
                         <div>
                             <h3 class="font-bold text-[#1E2D3D]">1. Preparação e Leitura (5 min)</h3>
-                            <p class="text-sm text-slate-600">Prepare sua mente em oração silenciosa. Leia e releia o trecho bíblico de 1 Pe 2.10 com foco.</p>
+                            <p class="text-sm text-slate-600">Prepare sua mente em oração silenciosa. Leia e releia o
+                                trecho bíblico com foco.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-2xl">📖</span>
                         <div>
                             <h3 class="font-bold text-[#1E2D3D]">2. Meditação Guiada - MEB (15 min)</h3>
-                            <p class="text-sm text-slate-600">Medite nas questões de Observação e Interpretação. Aplique as lições diretamente à sua identidade e serviço de hoje.</p>
+                            <p class="text-sm text-slate-600">Medite nas questões de Observação e Interpretação. Aplique
+                                as lições diretamente à sua identidade e serviço de hoje.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-2xl">🙏</span>
                         <div>
                             <h3 class="font-bold text-[#1E2D3D]">3. Oração e Memorização (10 min)</h3>
-                            <p class="text-sm text-slate-600">Gaste tempo em diálogo íntimo com Deus. Memorize a frase-chave del dia e guarde-a no coração.</p>
+                            <p class="text-sm text-slate-600">Gaste tempo em diálogo íntimo com Deus. Memorize a
+                                frase-chave do dia e guarde-a no coração.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </details>
 
+        <!-- DASHBOARD DE PROGRESSO: Acompanhamento de leitura pessoal -->
+        <section id="dashboard-section"
+            class="bg-white rounded-xl shadow-sm p-5 border border-[#E5DCD3] flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h3 class="font-bold text-slate-800 text-base md:text-lg">Seu Progresso de Leitura</h3>
+                <p class="text-slate-500 text-xs md:text-sm">Acompanhe seu avanço e marque as Horas Silenciosas
+                    completadas.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-[#FAF8F5] border border-[#E5DCD3] rounded-lg px-4 py-2 text-center shadow-inner">
+                    <span id="progress-percentage" class="text-2xl font-black text-[#C86240]">0%</span>
+                    <span class="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Concluído</span>
+                </div>
+                <div class="text-left">
+                    <span id="progress-counts" class="text-sm font-bold text-slate-700">0 de 22 lidos</span>
+                    <button onclick="resetProgress()"
+                        class="block text-[10px] text-red-500 hover:text-red-700 underline font-semibold mt-1">Limpar
+                        Progresso</button>
+                </div>
+            </div>
+        </section>
+
         <!-- SEÇÃO PRINCIPAL: Cronograma de Dias (Carregada diretamente) -->
         <section id="calendar-section" class="bg-white rounded-xl shadow-sm p-6 border border-[#E5DCD3]">
             <h2 class="text-2xl font-bold text-slate-800 mb-2">Jornada de Inverno</h2>
             <p class="text-slate-600 mb-6 leading-relaxed text-sm md:text-base">
-                Selecione abaixo o dia da sua jornada para ter acesso às orientações, leituras e perguntas do Método de Estudo Bíblico Indutivo (MEB) da sua Hora Silenciosa.
+                Selecione abaixo o dia da sua jornada para ter acesso às orientações, leituras e perguntas do Método de
+                Estudo Bíblico Indutivo (MEB) da sua Hora Silenciosa.
             </p>
 
             <div id="calendar-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -119,41 +159,63 @@
         </section>
 
         <!-- LEITOR INDUTIVO (Oculto até um dia ser selecionado) -->
-        <section id="reader-section" class="hidden bg-white rounded-xl shadow-lg border-t-4 border-[#C86240] p-6 md:p-8 mt-8 scroll-mt-6">
-            
+        <section id="reader-section"
+            class="hidden bg-white rounded-xl shadow-lg border-t-4 border-[#C86240] p-6 md:p-8 mt-8 scroll-mt-6">
+
             <!-- BARRA DE AÇÕES RÁPIDAS SUPERIOR (Menu Simples com Botões Arredondados) -->
             <div class="mb-6 pb-4 border-b border-[#E5DCD3] flex flex-wrap items-center justify-between gap-4">
                 <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Modo Leitura Ativo</span>
-                
+
                 <div class="flex flex-wrap items-center gap-2">
                     <!-- Botão 1: Voltar para o Painel (Home) -->
-                    <button onclick="closeReader()" class="inline-flex items-center gap-2 bg-[#1E2D3D] hover:bg-[#2D4255] text-[#FAF8F5] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
+                    <button onclick="closeReader()"
+                        class="inline-flex items-center gap-2 bg-[#1E2D3D] hover:bg-[#2D4255] text-[#FAF8F5] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>🏠</span>
                         <span>Painel</span>
                     </button>
-                    
+
                     <!-- Botão 2: Ir para a Hora Silenciosa do Dia (Hoje) -->
-                    <button onclick="openTodayDevotional()" class="inline-flex items-center gap-2 bg-[#DCA134] hover:bg-[#C99026] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
+                    <button onclick="openTodayDevotional()"
+                        class="inline-flex items-center gap-2 bg-[#DCA134] hover:bg-[#C99026] text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>⚡</span>
                         <span>Hoje</span>
                     </button>
-                    
+
                     <!-- Botão 3: Escolher Outro Dia (Menu Drawer) -->
-                    <button onclick="toggleDrawer(true)" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-[#E5DCD3] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
+                    <button onclick="toggleDrawer(true)"
+                        class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 border border-[#E5DCD3] text-xs md:text-sm font-bold py-2 px-4 rounded-full shadow-sm transition-all transform hover:scale-105">
                         <span>📅</span>
                         <span>Outro Dia</span>
                     </button>
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4 mb-6">
                 <div>
-                    <span id="read-period" class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block"></span>
+                    <span id="read-period"
+                        class="bg-slate-100 text-slate-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block"></span>
                     <h2 id="read-title" class="text-3xl font-extrabold text-[#1E2D3D] flex items-center gap-2"></h2>
                     <p id="read-date" class="text-slate-500 text-sm font-medium mt-1"></p>
                 </div>
-                <div class="mt-4 md:mt-0 text-left md:text-right">
-                    <div id="read-verse" class="text-xl font-bold text-[#C86240] bg-[#C86240]/5 px-3 py-1 rounded"></div>
+                <div class="mt-4 md:mt-0 flex flex-col items-start md:items-end gap-2">
+                    <div id="read-verse" class="text-xl font-bold text-[#C86240] bg-[#C86240]/5 px-3 py-1 rounded">
+                    </div>
+                    <!-- Botão de Marcação Concluída da lição -->
+                    <button id="mark-read-btn"
+                        class="text-xs font-bold px-3 py-1 rounded-full border border-slate-300 hover:bg-slate-50 transition-colors shadow-sm"></button>
+                </div>
+            </div>
+
+            <!-- CARD EXCLUSIVO DO TEXTO BÍBLICO (Tradução NAA) -->
+            <div class="bg-slate-50 border-l-4 border-[#1E2D3D] p-5 md:p-6 rounded-r-xl shadow-sm mb-6">
+                <span class="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest block mb-2">Trecho
+                    Bíblico de Estudo</span>
+                <p id="read-verse-text" class="text-slate-800 text-base md:text-lg italic font-medium leading-relaxed">
+                </p>
+                <div class="text-right mt-3">
+                    <span class="text-[10px] bg-slate-200 text-slate-500 font-bold px-2 py-0.5 rounded">NAA (Nova
+                        Almeida Atualizada)</span>
                 </div>
             </div>
 
@@ -162,7 +224,7 @@
                     <div class="bg-amber-50 border-l-4 border-[#DCA134] p-4 rounded-r">
                         <p id="read-phrase" class="text-lg italic font-medium text-amber-900"></p>
                     </div>
-                    
+
                     <div class="flex gap-4 text-sm">
                         <div class="bg-slate-50 p-3 rounded flex-1 border border-slate-100">
                             <span class="block text-slate-400 text-xs uppercase font-bold mb-1">Etapa</span>
@@ -176,36 +238,43 @@
                 </div>
             </div>
 
-            <h3 class="text-xl font-bold text-[#1E2D3D] mb-4 border-b pb-2 flex items-center gap-2"><span>📚</span> Estudo Bíblico Indutivo (MEB)</h3>
-            
+            <h3 class="text-xl font-bold text-[#1E2D3D] mb-4 border-b pb-2 flex items-center gap-2"><span>📚</span>
+                Estudo Bíblico Indutivo (MEB)</h3>
+
             <div class="space-y-6 mb-10">
                 <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow transition">
-                    <h4 class="text-[#C86240] font-bold mb-2 flex items-center gap-2 text-lg"><span>🔍</span> 1. Observação</h4>
+                    <h4 class="text-[#C86240] font-bold mb-2 flex items-center gap-2 text-lg"><span>🔍</span> 1.
+                        Observação</h4>
                     <p id="read-obs" class="text-slate-700 leading-relaxed"></p>
                 </div>
 
                 <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow transition">
-                    <h4 class="text-[#C86240] font-bold mb-2 flex items-center gap-2 text-lg"><span>💡</span> 2. Interpretação</h4>
+                    <h4 class="text-[#C86240] font-bold mb-2 flex items-center gap-2 text-lg"><span>💡</span> 2.
+                        Interpretação</h4>
                     <p id="read-int" class="text-slate-700 leading-relaxed"></p>
                 </div>
 
                 <div class="bg-[#FAF8F5] p-6 rounded-lg border border-[#E5DCD3] shadow-inner">
-                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3. Aplicação Prática</h4>
+                    <h4 class="text-[#1E2D3D] font-bold mb-3 flex items-center gap-2 text-xl"><span>🏃</span> 3.
+                        Aplicação Prática</h4>
                     <p id="read-app" class="text-[#1E2D3D] font-medium leading-relaxed"></p>
                 </div>
             </div>
-            
+
             <!-- NAVEGAÇÃO ENTRE DIAS (RODAPÉ) -->
             <div class="border-t border-slate-200 pt-6 flex justify-between items-center gap-2">
-                <button id="nav-prev-btn" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
+                <button id="nav-prev-btn"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
                     <span>←</span> <span class="hidden sm:inline">Anterior</span>
                 </button>
-                
-                <button id="nav-up-btn" class="bg-[#1E2D3D] hover:bg-[#2D4255] text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
+
+                <button id="nav-up-btn"
+                    class="bg-[#1E2D3D] hover:bg-[#2D4255] text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
                     <span>↑</span> <span class="hidden sm:inline">Menu Inicial</span>
                 </button>
-                
-                <button id="nav-next-btn" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
+
+                <button id="nav-next-btn"
+                    class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition">
                     <span class="hidden sm:inline">Próximo</span> <span>→</span>
                 </button>
             </div>
@@ -222,6 +291,7 @@
         const devotionals = [
             {
                 day: 1, date: "02/07", title: "PROPÓSITO", icon: "🎯", verse: "Colossenses 3.23-24",
+                verseText: "Tudo o que fizerem, façam de todo o coração, como para o Senhor e não para as pessoas, sabendo que receberão do Senhor a recompensa da herança. É a Cristo, o Senhor, que vocês estão servindo.",
                 phrase: "Servimos com o coração voltado para Deus, não para aplausos.",
                 stage: "Motivação e chamado", focus: "Primeiro dia oficial da equipe.",
                 period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-[#E5DCD3]",
@@ -233,6 +303,7 @@
             },
             {
                 day: 2, date: "03/07", title: "ENTREGA", icon: "👐", verse: "Romanos 12.1",
+                verseText: "Portanto, irmãos, pelas misericórdias de Deus, peço que apresentem o corpo de vocês como sacrifício vivo, santo e agradável a Deus, que é o culto racional de vocês.",
                 phrase: "Servir começa quando colocamos tudo no altar.",
                 stage: "Motivação e chamado", focus: "Consagração pessoal e física.",
                 period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-[#E5DCD3]",
@@ -243,7 +314,8 @@
                 }
             },
             {
-                day: 3, date: "04/07", title: "DECISÃO", icon: "🏁", verse: "Josué 24.15b",
+                day: 3, date: "04/07", title: "DECISÃO", icon: "🏁", verse: "Josué 24.15",
+                verseText: "Mas, se vocês não quiserem servir ao Senhor, escolham hoje a quem vão servir: se os deuses a quem serviram os pais de vocês, que estavam do outro lado do Eufrates, ou os deuses dos amorreus, em cuja terra vocês habitam. Eu e a minha casa serviremos ao Senhor.",
                 phrase: "Servir ao Senhor é uma escolha renovada todos os dias.",
                 stage: "Motivação e chamado", focus: "Véspera da chegada dos primeiros acampantes.",
                 period: "Preparo da Equipe", periodDates: "02/07 a 04/07", periodIcon: "🛠️", periodColor: "bg-[#E5DCD3]",
@@ -255,6 +327,7 @@
             },
             {
                 day: 4, date: "05/07", title: "SERVIÇO", icon: "🧼", verse: "Marcos 10.45",
+                verseText: "Pois o próprio Filho do Homem não veio para ser servido, mas para servir e dar a sua vida em resgate de muitos.",
                 phrase: "Seguimos Jesus quando escolhemos servir.",
                 stage: "Dependência de Deus", focus: "Chegada dos acampantes (Tweens 1).",
                 period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-[#E2EAE2]",
@@ -266,6 +339,7 @@
             },
             {
                 day: 5, date: "06/07", title: "CONFIANÇA", icon: "🔓", verse: "Provérbios 16.3",
+                verseText: "Entregue as suas obras ao Senhor, e os seus planos serão estabelecidos.",
                 phrase: "Entregar as obras ao Senhor traz descanso ao coração.",
                 stage: "Dependência de Deus", focus: "Primeiras 24 horas de programação ativa com as crianças.",
                 period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-[#E2EAE2]",
@@ -277,6 +351,7 @@
             },
             {
                 day: 6, date: "07/07", title: "FUNDAMENTO", icon: "🧱", verse: "Salmo 127.1",
+                verseText: "Se o Senhor não edificar a casa, em vão trabalham os que a edificam; se o Senhor não guardar a cidade, em vão vigia a sentinela.",
                 phrase: "Só o que Deus constrói permanece.",
                 stage: "Dependência de Deus", focus: "Meio de semana. Perigo de confiar nas próprias habilidades.",
                 period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-[#E2EAE2]",
@@ -288,6 +363,7 @@
             },
             {
                 day: 7, date: "08/07", title: "RENOVO", icon: "🔄", verse: "Isaías 40.31",
+                verseText: "Mas os que esperam no Senhor renovam as suas forças; sobem com asas como águias; correm e não se cansam; caminham e não se fatigam.",
                 phrase: "Deus renova forças que já se esgotaram.",
                 stage: "Dependência de Deus", focus: "Último dia de Tweens 1. Cansaço físico acumulado por correr com as crianças.",
                 period: "Tweens 1", periodDates: "05/07 a 08/07", periodIcon: "🧸", periodColor: "bg-[#E2EAE2]",
@@ -299,6 +375,7 @@
             },
             {
                 day: 8, date: "09/07", title: "DESCANSO", icon: "🌙", verse: "Mateus 11.28",
+                verseText: "Venham a mim todos vocês que estão cansados e sobrecarregados, e eu lhes darei descanso.",
                 phrase: "O descanso verdadeiro começa em Cristo.",
                 stage: "Dependência de Deus", focus: "Transição e recepção do segundo grupo de Tweens.",
                 period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-[#EAF0F6]",
@@ -310,6 +387,7 @@
             },
             {
                 day: 9, date: "10/07", title: "GRAÇA", icon: "🎁", verse: "2Coríntios 12.9",
+                verseText: "Então ele me disse: 'A minha graça é o que lhe basta, porque o meu poder se aperfeiçoa na fraqueza.' De boa vontade, pois, mais me gloriarei nas minhas fraquezas, para que sobre mim repouse o poder de Cristo.",
                 phrase: "A graça sustenta quando a força acaba.",
                 stage: "Dependência de Deus", focus: "Paciência e dependência da graça no início do fim de semana.",
                 period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-[#EAF0F6]",
@@ -321,6 +399,7 @@
             },
             {
                 day: 10, date: "11/07", title: "MISERICÓRDIA", icon: "🌅", verse: "Lamentações 3.22-23",
+                verseText: "As misericórdias do Senhor são a causa de não sermos consumidos, porque as suas misericórdias não têm fim; renovam-se cada manhã. Grande é a tua fidelidade.",
                 phrase: "Cada manhã traz graça suficiente para hoje.",
                 stage: "Fidelidade no cansaço", focus: "Penúltimo dia de Tweens 2. Necessidade de renovação espiritual diária.",
                 period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-[#EAF0F6]",
@@ -332,6 +411,7 @@
             },
             {
                 day: 11, date: "12/07", title: "SOCORRO", icon: "🤝", verse: "Salmo 46.1",
+                verseText: "Deus é o nosso refúgio e fortaleza, socorro bem presente nas tribulações.",
                 phrase: "Deus está presente mesmo nos dias difíceis.",
                 stage: "Fidelidade no cansaço", focus: "Último dia de Tweens. Batalhas finais e preparação para a saída das crianças.",
                 period: "Tweens 2", periodDates: "09/07 a 12/07", periodIcon: "🧸", periodColor: "bg-[#EAF0F6]",
@@ -343,6 +423,7 @@
             },
             {
                 day: 12, date: "13/07", title: "FIDELIDADE", icon: "📌", verse: "Lucas 16.10",
+                verseText: "Quem é fiel no pouco também é fiel no muito; e quem é injusto no pouco também é injusto no muito.",
                 phrase: "Deus valoriza a fidelidade nas pequenas coisas.",
                 stage: "Fidelidade no cansaço", focus: "Chegada dos Teens 1. A importância da integridade nos pequenos detalhes.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
@@ -354,6 +435,7 @@
             },
             {
                 day: 13, date: "14/07", title: "SECRETO", icon: "👁️", verse: "Mateus 6.3-4",
+                verseText: "Mas, ao dar esmola, que a sua mão esquerda não saiba o que faz a direita, para que a sua esmola fique em segredo. E o seu Pai, que vê em segredo, lhe dará a recompensa.",
                 phrase: "O Pai vê o serviço que ninguém vê.",
                 stage: "Serviço invisível", focus: "Atuação nos bastidores e combate à vaidade.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
@@ -365,6 +447,7 @@
             },
             {
                 day: 14, date: "15/07", title: "HUMILDADE", icon: "⬇️", verse: "1Pedro 5.5",
+                verseText: "Da mesma forma, vocês que são mais jovens, sujeitem-se aos presbíteros. E que todos se revistam de humildade no trato uns com os outros, porque 'Deus se opõe aos orgulhosos, mas dá graça aos humildes'.",
                 phrase: "A humility nos mantém no lugar certo diante de Deus.",
                 stage: "Serviço invisível", focus: "Convivência e submissão mútua na equipe no meio da temporada.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
@@ -376,6 +459,7 @@
             },
             {
                 day: 15, date: "16/07", title: "PUREZA", icon: "✨", verse: "Filipenses 2.14-15",
+                verseText: "Façam todas as coisas sem murmurações nem discussões, para que se tornem irrepreensíveis e puros, filhos de Deus inculpáveis no meio de uma geração perversa e corrupta, na qual vocês brilham como luzeiros no mundo,",
                 phrase: "Nosso testemunho aparece nas atitudes simples.",
                 stage: "Serviço invisível", focus: "Combate à murmuração decorrente do cansaço físico.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
@@ -387,6 +471,7 @@
             },
             {
                 day: 16, date: "17/07", title: "MANSIDÃO", icon: "💬", verse: "Provérbios 15.1",
+                verseText: "A resposta branda desvia o furor, mas a palavra dura suscita a ira.",
                 phrase: "Palavras brandas preservam relacionamentos.",
                 stage: "Serviço invisível", focus: "Encerramento de Teens 1. Paciência no trato verbal sob pressão.",
                 period: "Teens 1", periodDates: "13/07 a 17/07", periodIcon: "🎒", periodColor: "bg-[#F5E6E3]",
@@ -398,6 +483,7 @@
             },
             {
                 day: 17, date: "18/07", title: "CONSTÂNCIA", icon: "🛣️", verse: "Gálatas 6.9",
+                verseText: "E não nos cansemos de fazer o bem, porque no tempo certo colheremos, se não desanimarmos.",
                 phrase: "Persistir no bem é sinal de fé madura.",
                 stage: "Testemunho e relacionamentos", focus: "Início do último grupo de Teens. Combate à fadiga espiritual e inércia.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
@@ -409,28 +495,31 @@
             },
             {
                 day: 18, date: "19/07", title: "EXEMPLO", icon: "👣", verse: "1Timóteo 4.12",
+                verseText: "Ninguém despreze a sua juventude; pelo contrário, seja um exemplo para os fiéis, na palavra, no procedimento, na palavra, na fé e na pureza.",
                 phrase: "Somos chamados a viver a fé visivelmente.",
                 stage: "Testemunho e relacionamentos", focus: "Integridade prática diante de jovens que buscam referências.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
                 meb: {
-                    obs: "O que Paulo diz para Timóteo não permitir que façam com ele? Em quais cinco áreas específicas ele deve se tornar um padrão/exemplo para os fiéis?",
+                    obs: "O que Paulo diz para Timóteo não permitir que façam com ele? Em quais os cinco eixos estruturais ele deve se tornar um padrão/exemplo para os fiéis?",
                     int: "Timóteo era jovem e enfrentava preconceitos. Como o nosso comportamento prático e silencioso (especialmente na palavra, no procedimento e no amor) valida e dá autoridade espiritual às mensagens e conselhos bíblicos que damos aos adolescentes?",
                     app: "Adolescentes farejam fingimento e pose a quilômetros de distância. Eles notarão rapidamente se o seu 'ar de santidade' ou maturidade bíblica no palco ou nas salas é real ou se desmorona nas conversas de alojamento ou no desrespeito aos horários. De que forma o seu exemplo prático e silencioso validará o Evangelho hoje?"
                 }
             },
             {
                 day: 19, date: "20/07", title: "LUZ", icon: "💡", verse: "Mateus 5.16",
+                verseText: "Assim brilhe também a luz de vocês diante dos outros, para que vejam as boas obras que vocês fazem e glorifiquem o Pai de vocês, que está nos céus.",
                 phrase: "Nossa vida aponta para a glória de Deus.",
                 stage: "Testemunho e relacionamentos", focus: "Atitude evangelística e direcionamento da glória para o Pai.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
                 meb: {
                     obs: "De qual maneira a nossa luz deve brilhar diante das pessoas? Qual deve ser a reação natural delas ao contemplarem as nossas boas obras?",
                     int: "Brilhar a nossa luz não significa exibir uma espiritualidade orgulhosa para sermos elogiados, mas sim refletir o caráter de Cristo. De que forma o orgulho de querermos ser considerados os 'melhores conselheiros' ou os mais 'legais' rouba a glória que pertence unicamente a Deus?",
-                    app: "Quando os acampantes começam a se apegar a você ou elogiar sua dedicação, como você direciona esse carinho? Ore hoje pedindo que cada sorriso, abraço e palavra sua sirva como uma seta apontando os adolescentes para a beleza do Pai celestial, e não para você."
+                    app: "Não caia na armadilha de mostrar um ar de superioridade por estar atuando em um setor 'mais visível' e pop, ou uma falsa modéstia para ser elogiado por servir em um setor 'invisível'. Como você pode submeter o seu desejo de ser notado hoje para que as pessoas glorifiquem apenas ao Pai que está nos céus?"
                 }
             },
             {
                 day: 20, date: "21/07", title: "SUPORTE", icon: "🔗", verse: "Romanos 15.1",
+                verseText: "Nós que somos fortes devemos suportar as fraquezas dos fracos e não agradar a nós mesmos.",
                 phrase: "Servimos melhor quando carregamos uns aos outros.",
                 stage: "Testemunho e relacionamentos", focus: "Meio de semana. Cuidado mútua na reta final quando o estresse aumenta.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
@@ -442,17 +531,19 @@
             },
             {
                 day: 21, date: "22/07", title: "AMOR", icon: "❤️", verse: "João 13.34-35",
+                verseText: "Um novo mandamento lhes dou: que vocês se amem uns aos outros; assim como eu os amei, que também vocês se amem uns aos outros. Nisto todos conhecerão que vocês são meus discípulos: se tiverem amor uns aos outros.",
                 phrase: "O amor é a marca mais visível do discípulo.",
                 stage: "Perseverança até o fim", focus: "Último dia com acampantes. Despedida dos Teens 2 e noite de decisões.",
                 period: "Teens 2", periodDates: "18/07 a 22/07", periodIcon: "🎒", periodColor: "bg-[#EFE8F4]",
                 meb: {
-                    obs: "Qual é o 'novo mandamento' que Jesus deixa para Seus seguidores? Qual é a regra/padrão que Ele estabelece para esse amor? O que esse amor mútuo revelará publicamente ao mundo?",
+                    obs: "Qual é o 'novo mandamento' que Jesus deixa para Seus seguidores? Qual é a régua/padrão que Ele estabelece para esse amor? O que esse amor mútuo revelará publicamente ao mundo?",
                     int: "Por que o amor mútuo dentro de uma equipe ministerial é a ferramenta apologética e evangelística mais poderosa diante dos adolescentes do acampamento, muito mais do que qualquer palestra ou estrutura de som?",
                     app: "No esgotamento de final de temporada, o amor é uma decisão de não fazer o mínimo. Exige sacrificar o seu conforto para interagir pacientemente com adolescentes críticos e equipantes exaustos, além das panelinhas habituais. Como você demonstrará esse amor sacrificial prático hoje no último apelo?"
                 }
             },
             {
                 day: 22, date: "23/07", title: "RECOMPENSA", icon: "🏆", verse: "Hebreus 6.10",
+                verseText: "Porque Deus não é injusto para se esquecer do trabalho de vocês e do amor que demonstraram para com o seu nome, pois serviram e ainda servem aos santos.",
                 phrase: "Deus não se esquece de nenhum serviço fiel.",
                 stage: "Perseverança até o fim", focus: "Último dia da equipe. Fechamento e envio para a igreja local.",
                 period: "Despedida da Equipe", periodDates: "23/07", periodIcon: "🌅", periodColor: "bg-[#F7EFE2]",
@@ -470,14 +561,14 @@
             renderChart();
             renderCalendar();
             renderDrawer();
-            
+
             // Ouvinte para mudanças de rotas (URL Hash)
             window.addEventListener('hashchange', handleRouting);
-            
+
             // Processa o estado de roteamento inicial
             const savedDay = localStorage.getItem('apv_last_day');
             const readerWasOpen = localStorage.getItem('apv_reader_open') === 'true';
-            
+
             if (window.location.hash.startsWith('#dia-')) {
                 handleRouting();
             } else if (savedDay && readerWasOpen) {
@@ -487,6 +578,7 @@
                 closeReader();
             }
             highlightToday();
+            updateProgressDOM();
 
             // Ativa o suporte de Service Worker para funcionalidade Offline
             if ('serviceWorker' in navigator) {
@@ -507,9 +599,9 @@
                     datasets: [{
                         data: [5, 15, 10],
                         backgroundColor: [
-                            '#E5DCD3', 
-                            '#C86240', 
-                            '#DCA134'  
+                            '#E5DCD3',
+                            '#C86240',
+                            '#DCA134'
                         ],
                         borderWidth: 0,
                         hoverOffset: 4
@@ -530,7 +622,7 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return ' ' + context.label.split(' (')[0] + ': ' + context.raw + ' minutos';
                                 }
                             }
@@ -553,13 +645,16 @@
 
                 const card = document.createElement('div');
                 card.className = `border border-[#E5DCD3] rounded-xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-all duration-200`;
-                
+
                 let buttonsHTML = '';
                 periodDevos.forEach(devo => {
                     buttonsHTML += `
                         <button id="devo-btn-${devo.day}" onclick="openDevotional(${devo.day}, true)" class="w-full text-left px-4 py-3 border-t border-slate-100 hover:bg-[#FAF8F5]/85 flex justify-between items-center group transition-all">
                             <div>
-                                <span class="text-xs font-bold text-slate-400 block">DIA ${devo.day} • ${devo.date}</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold text-slate-400 block">DIA ${devo.day} • ${devo.date}</span>
+                                    <span id="badge-completed-${devo.day}" class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100 hidden">Lido</span>
+                                </div>
                                 <span class="font-semibold text-[#1E2D3D] group-hover:text-[#C86240] transition-colors">${devo.icon} ${devo.title}</span>
                             </div>
                             <span class="text-slate-300 group-hover:text-[#C86240] transform group-hover:translate-x-1 transition-all">➔</span>
@@ -597,7 +692,7 @@
 
                 const groupDiv = document.createElement('div');
                 groupDiv.className = `border border-[#E5DCD3] rounded-lg overflow-hidden flex flex-col mb-4`;
-                
+
                 let buttonsHTML = '';
                 periodDevos.forEach(devo => {
                     buttonsHTML += `
@@ -629,14 +724,14 @@
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const todayStr = `${dd}/${mm}`; // Ex: "03/07"
-            
+
             const todayDevo = devotionals.find(d => d.date === todayStr);
             if (todayDevo) {
                 // Destaque no Painel Inicial
                 const btn = document.getElementById(`devo-btn-${todayDevo.day}`);
                 if (btn) {
                     btn.classList.add('ring-2', 'ring-[#C86240]', 'ring-offset-2', 'bg-amber-50/50');
-                    
+
                     const titleSpan = btn.querySelector('.font-semibold');
                     if (titleSpan && !btn.querySelector('.today-badge')) {
                         const badge = document.createElement('span');
@@ -652,11 +747,11 @@
                     }
                 }
 
-                // Novo recurso: Destaque também na Barra/Guia Lateral
+                // Destaque também na Barra/Guia Lateral
                 const drawerBtn = document.getElementById(`drawer-btn-${todayDevo.day}`);
                 if (drawerBtn) {
                     drawerBtn.classList.add('bg-amber-50/50', 'border-l-4', 'border-l-[#C86240]');
-                    
+
                     const drawerTitleSpan = drawerBtn.querySelector('.font-semibold');
                     if (drawerTitleSpan && !drawerBtn.querySelector('.today-badge-sidebar')) {
                         const badgeSidebar = document.createElement('span');
@@ -673,7 +768,7 @@
             const dd = String(today.getDate()).padStart(2, '0');
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const todayStr = `${dd}/${mm}`;
-            
+
             let todayDevo = devotionals.find(d => d.date === todayStr);
             if (!todayDevo) {
                 todayDevo = devotionals.find(d => d.date === "03/07");
@@ -686,7 +781,7 @@
         function toggleDrawer(isOpen) {
             const drawer = document.getElementById('sidebar-drawer');
             const backdrop = document.getElementById('sidebar-backdrop');
-            
+
             if (isOpen) {
                 drawer.classList.remove('-translate-x-full');
                 backdrop.classList.remove('hidden');
@@ -715,21 +810,18 @@
         }
 
         function closeReader() {
-            // Se o hash atual não for vazio, remove-o de forma limpa sem registrar novo histórico
             if (window.location.hash !== '' && window.location.hash !== '#') {
                 history.replaceState(null, null, ' ');
             }
 
-            // Mostra o painel principal e oculta a secção de leitura do ecrã
             document.getElementById('calendar-section').classList.remove('hidden');
             document.getElementById('dynamics-section').classList.remove('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
             document.getElementById('reader-section').classList.add('hidden');
-            
-            // Desativa o estado de leitor aberto e limpa a sessão para não travar no reload
+
             localStorage.setItem('apv_reader_open', 'false');
             localStorage.removeItem('apv_last_day');
 
-            // Limpa as marcas de seleção de leitura para manter o menu estético e limpo
             devotionals.forEach(d => {
                 const button = document.getElementById(`devo-btn-${d.day}`);
                 const drawerButton = document.getElementById(`drawer-btn-${d.day}`);
@@ -741,11 +833,9 @@
                 }
             });
 
-            // Re-aplica as formatações e destaque do dia atual
             highlightToday();
-            
-            // Centra o foco na secção do calendário completo de dias
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            updateProgressDOM();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openDevotional(dayNumber, shouldScroll = true) {
@@ -756,12 +846,10 @@
             localStorage.setItem('apv_last_day', dayNumber);
             localStorage.setItem('apv_reader_open', 'true');
 
-            // Altera o hash da URL para manter sincronia com o navegador e suporte ao botão "Voltar"
             if (window.location.hash !== `#dia-${dayNumber}`) {
                 window.location.hash = `#dia-${dayNumber}`;
             }
 
-            // Destaca o dia ativo na listagem de cards e no menu lateral
             devotionals.forEach(d => {
                 const button = document.getElementById(`devo-btn-${d.day}`);
                 const drawerButton = document.getElementById(`drawer-btn-${d.day}`);
@@ -781,24 +869,28 @@
                 }
             });
 
-            // Oculta as seções de menu para dar foco total à leitura (usabilidade mobile)
             document.getElementById('calendar-section').classList.add('hidden');
             document.getElementById('dynamics-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
 
             // Carrega dados no leitor
             document.getElementById('read-period').textContent = devo.period;
             document.getElementById('read-title').innerHTML = `${devo.icon} ${devo.title}`;
             document.getElementById('read-date').textContent = `Dia ${devo.day} • ${devo.date}`;
             document.getElementById('read-verse').textContent = devo.verse;
+            document.getElementById('read-verse-text').textContent = devo.verseText;
             document.getElementById('read-phrase').textContent = `"${devo.phrase}"`;
             document.getElementById('read-stage').textContent = devo.stage;
             document.getElementById('read-focus').textContent = devo.focus;
-            
+
             document.getElementById('read-obs').textContent = devo.meb.obs;
             document.getElementById('read-int').textContent = devo.meb.int;
             document.getElementById('read-app').textContent = devo.meb.app;
 
-            // Configura a visibilidade e lógica das setas direcionais de navegação
+            // Configuração do botão de marcar como lido
+            const isCompleted = isDayCompleted(dayNumber);
+            updateMarkReadButton(isCompleted);
+
             const prevBtn = document.getElementById('nav-prev-btn');
             const nextBtn = document.getElementById('nav-next-btn');
             const upBtn = document.getElementById('nav-up-btn');
@@ -817,18 +909,82 @@
                 nextBtn.onclick = () => openDevotional(dayNumber + 1, true);
             }
 
-            // Atribui a função de fechar o leitor ao botão de menu central
             upBtn.onclick = closeReader;
 
             const readerSection = document.getElementById('reader-section');
             readerSection.classList.remove('hidden');
-            
+
             if (shouldScroll) {
-                window.scrollTo({top: 0, behavior: 'smooth'});
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // FUNÇÕES DO CONTROLE DE PROGRESSO
+        function isDayCompleted(day) {
+            const completed = JSON.parse(localStorage.getItem('apv_completed_days') || '[]');
+            return completed.includes(day);
+        }
+
+        function toggleDayCompleted() {
+            if (!currentActiveDay) return;
+            let completed = JSON.parse(localStorage.getItem('apv_completed_days') || '[]');
+
+            if (completed.includes(currentActiveDay)) {
+                completed = completed.filter(d => d !== currentActiveDay);
+            } else {
+                completed.push(currentActiveDay);
+            }
+
+            localStorage.setItem('apv_completed_days', JSON.stringify(completed));
+            const hasCompleted = completed.includes(currentActiveDay);
+            updateMarkReadButton(hasCompleted);
+        }
+
+        function updateMarkReadButton(isCompleted) {
+            const btn = document.getElementById('mark-read-btn');
+            if (isCompleted) {
+                btn.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 transition-colors shadow-sm";
+                btn.innerHTML = "✓ Concluído";
+            } else {
+                btn.className = "text-xs font-bold px-3 py-1 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 transition-colors shadow-sm";
+                btn.innerHTML = "Marcar como Lido";
+            }
+            btn.onclick = toggleDayCompleted;
+        }
+
+        function updateProgressDOM() {
+            const completed = JSON.parse(localStorage.getItem('apv_completed_days') || '[]');
+            const count = completed.length;
+            const percentage = Math.round((count / devotionals.length) * 100);
+
+            document.getElementById('progress-percentage').textContent = `${percentage}%`;
+            document.getElementById('progress-counts').textContent = `${count} de ${devotionals.length} lidos`;
+
+            // Mostra ou oculta os badges nos cards do calendário
+            devotionals.forEach(devo => {
+                const badge = document.getElementById(`badge-completed-${devo.day}`);
+                if (badge) {
+                    if (completed.includes(devo.day)) {
+                        badge.classList.remove('hidden');
+                    } else {
+                        badge.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function resetProgress() {
+            if (confirm("Tem certeza de que deseja limpar todo o seu progresso de leitura?")) {
+                localStorage.setItem('apv_completed_days', '[]');
+                updateProgressDOM();
+                if (currentActiveDay) {
+                    updateMarkReadButton(false);
+                }
             }
         }
 
         window.onload = initApp;
     </script>
 </body>
+
 </html>
